@@ -4,7 +4,7 @@
   "main": "index.tsx",
   "scripts": {
     "clean": "git clean -xdf .expo .turbo node_modules",
-    "dev": "expo start --ios",
+    "dev": "expo start --android",
     "dev:android": "expo start --android",
     "dev:ios": "expo start --ios",
     "lint": "eslint .",
@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@expo/metro-config": "^0.7.1",
-    "@shopify/flash-list": "1.4.3",
+    "@shopify/flash-list": "1.4.0",
     "@tanstack/react-query": "^4.29.5",
     "@trpc/client": "^10.23.0",
     "@trpc/react-query": "^10.23.0",
@@ -28,7 +28,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.71.7",
-    "react-native-safe-area-context": "4.5.2",
+    "react-native-safe-area-context": "4.5.0",
     "react-native-screens": "~3.20.0",
     "superjson": "1.9.1"
   },
@@ -41,13 +41,13 @@
     "@babel/runtime": "^7.21.0",
     "@expo/config-plugins": "^6.0.1",
     "@types/babel__core": "^7.20.0",
-    "@types/react": "^18.2.0",
+    "@types/react": "~18.0.27",
     "@types/webpack-env": "^1.18.0",
     "babel-plugin-module-resolver": "^5.0.0",
     "eslint": "^8.39.0",
     "postcss": "^8.4.23",
     "tailwindcss": "^3.3.2",
-    "typescript": "^5.0.4"
+    "typescript": "^4.9.4"
   },
   "private": true
 }

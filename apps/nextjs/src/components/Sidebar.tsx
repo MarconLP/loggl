@@ -1,12 +1,19 @@
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { InboxIcon } from "@heroicons/react/24/solid";
+import { signIn, useSession } from "next-auth/react";
 
 import AccountMenu from "~/components/AccountMenu";
 
 export default function Sidebar() {
+  const { data: session } = useSession({
+    required: true,
+    onUnauthenticated() {
+      void signIn();
+    },
+  });
   const router = useRouter();
+
   const projects = [
     {
       id: "asdfsdfjnt",
@@ -37,6 +44,7 @@ export default function Sidebar() {
     },
   ];
 
+  if (!session) return <span> not logged in </span>;
   return (
     <div className="flex w-[220px] flex-shrink-0 flex-col border-r border-[#E7E9EB]">
       <div className="flex h-[62px] items-center border-b border-[#E7E9EB]">

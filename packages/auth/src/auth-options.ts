@@ -32,6 +32,7 @@ declare module "next-auth" {
  * @see https://next-auth.js.org/configuration/options
  **/
 export const authOptions: NextAuthOptions = {
+  debug: true,
   callbacks: {
     session({ session, user }) {
       if (session.user) {
@@ -62,7 +63,7 @@ export const authOptions: NextAuthOptions = {
      **/
   ],
   pages: {
-    signIn: "/auth/sign-in",
+    signIn: "/sign-in",
     signOut: "/auth/signout",
     error: "/auth/error", // Error code passed in query string as ?error=
   },

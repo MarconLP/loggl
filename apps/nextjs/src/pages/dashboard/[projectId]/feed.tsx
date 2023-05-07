@@ -10,9 +10,9 @@ import Sidebar from "~/components/Sidebar";
 const Feed: NextPage = () => {
   const router = useRouter();
   const projectId = router.query.projectId;
-  const { data: notifications, isLoading } = api.feed.getByChannel.useQuery(
+  const { data: notifications, isLoading } = api.feed.getByProject.useQuery(
     {
-      channelId: projectId as string,
+      projectId: projectId as string,
     },
     {
       enabled: !!projectId,

@@ -21,7 +21,11 @@ export const feedRouter = createTRPCRouter({
     };
   }),
   getAll: protectedProcedure.query(async ({ ctx }) => {
-    const notifications = await ctx.prisma.notification.findMany({});
+    const notifications = await ctx.prisma.notification.findMany({
+      where: {
+        userId: ctx.session.user.id,
+      },
+    });
     return {
       notifications,
     };

@@ -38,6 +38,8 @@ model Notification {
   projectId   String
   channelId   String
   timestamp   DateTime @default(now())
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String
 }
 
 // NextAuth.js Models
@@ -71,14 +73,15 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String         @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String?        @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
   projects      Project[]
+  notifications Notification[]
 }
 
 model VerificationToken {

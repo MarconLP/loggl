@@ -17,6 +17,7 @@
     "@acme/auth": "^0.1.0",
     "@acme/db": "^0.1.0",
     "@acme/tailwind-config": "^0.1.0",
+    "@headlessui/react": "^1.7.14",
     "@heroicons/react": "^2.0.17",
     "@t3-oss/env-nextjs": "^0.2.2",
     "@tanstack/react-query": "^4.29.5",

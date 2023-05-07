@@ -1,6 +1,9 @@
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { InboxIcon } from "@heroicons/react/24/solid";
+
+import AccountMenu from "~/components/AccountMenu";
 
 export default function Sidebar() {
   const router = useRouter();
@@ -35,7 +38,7 @@ export default function Sidebar() {
   ];
 
   return (
-    <div className="w-[220px] flex-shrink-0 border-r border-[#E7E9EB]">
+    <div className="flex w-[220px] flex-shrink-0 flex-col border-r border-[#E7E9EB]">
       <div className="flex h-[62px] items-center border-b border-[#E7E9EB]">
         <span className="ml-4">Loggl</span>
       </div>
@@ -100,6 +103,9 @@ export default function Sidebar() {
             ))}
           </div>
         </div>
+      </div>
+      <div className="flex flex-1 items-end">
+        <AccountMenu />
       </div>
     </div>
   );

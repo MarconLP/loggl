@@ -3,7 +3,9 @@ import { useRouter } from "next/router";
 import { InboxIcon } from "@heroicons/react/24/solid";
 import { signIn, useSession } from "next-auth/react";
 
+import { api } from "~/utils/api";
 import AccountMenu from "~/components/AccountMenu";
+import LoadingSpinner from "~/components/LoadingSpinner";
 
 export default function Sidebar() {
   const { data: session } = useSession({
@@ -13,38 +15,8 @@ export default function Sidebar() {
     },
   });
   const router = useRouter();
+  const { data: user } = api.feed.getProjects.useQuery();
 
-  const projects = [
-    {
-      id: "asdfsdfjnt",
-      name: "Snapify",
-      channels: [
-        { name: "purchases", id: "nbdr" },
-        { name: "feature usages", id: "gthjn" },
-        { name: "failures", id: "asdf" },
-      ],
-    },
-    {
-      id: "gfrth",
-      name: "Loggl",
-      channels: [
-        { name: "purchases", id: "ndfgh" },
-        { name: "feature usages", id: "arbdf" },
-        { name: "failures", id: "mfzj" },
-      ],
-    },
-    {
-      id: "dfhrre",
-      name: "Tablane",
-      channels: [
-        { name: "purchases", id: "rehg" },
-        { name: "feature usages", id: "cftzrst" },
-        { name: "failures", id: "asef" },
-      ],
-    },
-  ];
-
-  if (!session) return <span> not logged in </span>;
   return (
     <div className="flex w-[220px] flex-shrink-0 flex-col border-r border-[#E7E9EB]">
       <div className="flex h-[62px] items-center border-b border-[#E7E9EB]">
@@ -74,41 +46,47 @@ export default function Sidebar() {
             </span>
           </div>
           <div className="mt-1 flex flex-col">
-            {projects.map(({ id, name, channels }) => (
-              <div key={id} className="">
-                <Link key={id} href={`/dashboard/${id}/feed`}>
-                  <div
-                    className={`my-[2px] flex h-7 cursor-pointer items-center rounded-md px-2 pl-4 transition-colors hover:bg-[#f1f3f9] ${
-                      router.asPath === `/dashboard/${id}/feed`
-                        ? "bg-[#f1f3f9]"
-                        : "hover:bg-[#f1f3f9]"
-                    }`}
-                  >
-                    <span className="text-[13px] font-medium text-[#282A30]">
-                      {name}
-                    </span>
-                  </div>
-                </Link>
-                {channels.map(({ id: channelId, name }) => (
-                  <Link
-                    key={channelId}
-                    href={`/dashboard/${id}/${channelId}/feed`}
-                  >
+            {user?.user?.projects ? (
+              user.user.projects.map(({ id, name, channels }) => (
+                <div key={id} className="">
+                  <Link key={id} href={`/dashboard/${id}/feed`}>
                     <div
-                      className={`my-[2px] flex h-7 cursor-pointer items-center rounded-md pl-6 pr-2 transition-colors hover:bg-[#f1f3f9] ${
-                        router.asPath === `/dashboard/${id}/${channelId}/feed`
+                      className={`my-[2px] flex h-7 cursor-pointer items-center rounded-md px-2 pl-4 transition-colors hover:bg-[#f1f3f9] ${
+                        router.asPath === `/dashboard/${id}/feed`
                           ? "bg-[#f1f3f9]"
                           : "hover:bg-[#f1f3f9]"
                       }`}
                     >
-                      <span className="text-[13px] font-medium text-[#3c4149]">
-                        # {name}
+                      <span className="text-[13px] font-medium text-[#282A30]">
+                        {name}
                       </span>
                     </div>
                   </Link>
-                ))}
+                  {channels.map(({ id: channelId, name }) => (
+                    <Link
+                      key={channelId}
+                      href={`/dashboard/${id}/${channelId}/feed`}
+                    >
+                      <div
+                        className={`my-[2px] flex h-7 cursor-pointer items-center rounded-md pl-6 pr-2 transition-colors hover:bg-[#f1f3f9] ${
+                          router.asPath === `/dashboard/${id}/${channelId}/feed`
+                            ? "bg-[#f1f3f9]"
+                            : "hover:bg-[#f1f3f9]"
+                        }`}
+                      >
+                        <span className="text-[13px] font-medium text-[#3c4149]">
+                          # {name}
+                        </span>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              ))
+            ) : (
+              <div className="mt-4 flex w-full items-center justify-center">
+                <LoadingSpinner />
               </div>
-            ))}
+            )}
           </div>
         </div>
       </div>

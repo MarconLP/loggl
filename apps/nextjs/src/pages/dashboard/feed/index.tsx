@@ -7,7 +7,7 @@ import LoadingSpinner from "~/components/LoadingSpinner";
 import Sidebar from "~/components/Sidebar";
 
 const Feed: NextPage = () => {
-  const { data: notifications, isLoading } = api.feed.get.useQuery();
+  const { data: notifications, isLoading } = api.feed.getAll.useQuery();
 
   return (
     <>

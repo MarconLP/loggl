@@ -1,12 +1,14 @@
+import { SignalSlashIcon } from "@heroicons/react/24/solid";
+
 import { type RouterOutputs } from "@acme/api";
 
 interface Props {
-  notifications: RouterOutputs["feed"]["get"];
+  notifications: RouterOutputs["feed"]["getAll"];
 }
 
 export default function FeedList({ notifications }: Props) {
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex h-full flex-col items-center justify-start">
       {notifications.notifications.map(
         ({ id, event, description, timestamp, icon }) => (
           <div
@@ -27,6 +29,14 @@ export default function FeedList({ notifications }: Props) {
             </div>
           </div>
         ),
+      )}
+      {notifications.notifications.length === 0 && (
+        <div className="flex h-full flex-col items-center justify-center">
+          <SignalSlashIcon className="h-16 w-16" />
+          <span className="text-palette-900 mt-2 text-base font-medium leading-6 md:text-base">
+            No events found
+          </span>
+        </div>
       )}
     </div>
   );

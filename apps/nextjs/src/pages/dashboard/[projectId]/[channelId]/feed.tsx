@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import { useRouter } from "next/router";
 
 import { api } from "~/utils/api";
 import FeedList from "~/components/FeedList";
@@ -7,7 +8,16 @@ import LoadingSpinner from "~/components/LoadingSpinner";
 import Sidebar from "~/components/Sidebar";
 
 const Feed: NextPage = () => {
-  const { data: notifications, isLoading } = api.feed.get.useQuery();
+  const router = useRouter();
+  const channelId = router.query.channelId;
+  const { data: notifications, isLoading } = api.feed.getByChannel.useQuery(
+    {
+      channelId: channelId as string,
+    },
+    {
+      enabled: !!channelId,
+    },
+  );
 
   return (
     <>

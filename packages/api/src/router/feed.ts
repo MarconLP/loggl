@@ -3,23 +3,6 @@ import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const feedRouter = createTRPCRouter({
-  getProjects: protectedProcedure.query(async ({ ctx }) => {
-    const user = await ctx.prisma.user.findUnique({
-      where: {
-        id: ctx.session.user.id,
-      },
-      include: {
-        projects: {
-          include: {
-            channels: true,
-          },
-        },
-      },
-    });
-    return {
-      user,
-    };
-  }),
   getAll: protectedProcedure.query(async ({ ctx }) => {
     const notifications = await ctx.prisma.notification.findMany({
       where: {

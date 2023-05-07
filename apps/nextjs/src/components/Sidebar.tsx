@@ -15,7 +15,7 @@ export default function Sidebar() {
     },
   });
   const router = useRouter();
-  const { data: user } = api.feed.getProjects.useQuery();
+  const { data: projects } = api.projects.get.useQuery();
 
   return (
     <div className="flex w-[220px] flex-shrink-0 flex-col border-r border-[#E7E9EB]">
@@ -46,8 +46,8 @@ export default function Sidebar() {
             </span>
           </div>
           <div className="mt-1 flex flex-col">
-            {session && user?.user?.projects ? (
-              user.user.projects.map(({ id, name, channels }) => (
+            {session && projects ? (
+              projects?.map(({ id, name, channels }) => (
                 <div key={id} className="">
                   <Link key={id} href={`/dashboard/${id}/feed`}>
                     <div

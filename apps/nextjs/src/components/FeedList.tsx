@@ -1,14 +1,20 @@
-import { SignalSlashIcon } from "@heroicons/react/24/solid";
+import Link from "next/link";
+import { InboxIcon, SignalSlashIcon } from "@heroicons/react/24/solid";
 
 import { type RouterOutputs } from "@acme/api";
+
+import { api } from "~/utils/api";
+import NewProjectDialog from "~/components/NewProjectDialog";
 
 interface Props {
   notifications: RouterOutputs["feed"]["getAll"];
 }
 
 export default function FeedList({ notifications }: Props) {
+  const { data: projects } = api.projects.get.useQuery();
+
   return (
-    <div className="flex h-full flex-col items-center justify-start">
+    <div className="flex grow flex-col items-center justify-start">
       {notifications.notifications.map(
         ({ id, event, description, timestamp, icon }) => (
           <div
@@ -30,13 +36,23 @@ export default function FeedList({ notifications }: Props) {
           </div>
         ),
       )}
-      {notifications.notifications.length === 0 && (
-        <div className="flex h-full flex-col items-center justify-center">
-          <SignalSlashIcon className="h-16 w-16" />
-          <span className="text-palette-900 mt-2 text-base font-medium leading-6 md:text-base">
-            No events found
-          </span>
-        </div>
+      {projects && projects?.length <= 0 ? (
+        <NewProjectDialog />
+      ) : (
+        notifications.notifications.length === 0 && (
+          <Link
+            href="https://docs.loggl.net/"
+            className="flex h-full flex-col items-center justify-center"
+          >
+            <SignalSlashIcon className="h-16 w-16" />
+            <span className="text-palette-900 mt-2 text-base font-medium leading-6 md:text-base">
+              No events found
+            </span>
+            <button className="mt-6 inline-flex items-center rounded-md border border-transparent bg-[#171717] px-4 py-2 text-sm font-medium text-white hover:bg-[#404040] focus:outline-none">
+              Documentation
+            </button>
+          </Link>
+        )
       )}
     </div>
   );

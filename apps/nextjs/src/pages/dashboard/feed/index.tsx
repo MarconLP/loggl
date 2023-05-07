@@ -7,7 +7,7 @@ import LoadingSpinner from "~/components/LoadingSpinner";
 import Sidebar from "~/components/Sidebar";
 
 const Feed: NextPage = () => {
-  const { data: events, isLoading } = api.feed.get.useQuery();
+  const { data: notifications, isLoading } = api.feed.get.useQuery();
 
   return (
     <>
@@ -22,8 +22,8 @@ const Feed: NextPage = () => {
           <div className="flex h-[62px] items-center border-b border-[#E7E9EB]">
             <span className="ml-4 font-bold">Feed</span>
           </div>
-          {!isLoading && events ? (
-            <FeedList events={events.events} />
+          {!isLoading && notifications ? (
+            <FeedList notifications={notifications} />
           ) : (
             <div className="mt-4 flex justify-center">
               <LoadingSpinner />

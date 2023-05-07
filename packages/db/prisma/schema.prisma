@@ -37,6 +37,7 @@ model Notification {
   project     Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
   projectId   String
   channelId   String
+  timestamp   DateTime @default(now())
 }
 
 // NextAuth.js Models

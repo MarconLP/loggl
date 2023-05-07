@@ -67,7 +67,7 @@ export default function Sidebar() {
               <div key={id} className="">
                 <Link key={id} href={`/dashboard/${id}/feed`}>
                   <div
-                    className={`flex h-7 cursor-pointer items-center rounded-md px-2 pl-4 transition-colors hover:bg-[#f1f3f9] ${
+                    className={`my-[2px] flex h-7 cursor-pointer items-center rounded-md px-2 pl-4 transition-colors hover:bg-[#f1f3f9] ${
                       router.asPath === `/dashboard/${id}/feed`
                         ? "bg-[#f1f3f9]"
                         : "hover:bg-[#f1f3f9]"
@@ -84,7 +84,7 @@ export default function Sidebar() {
                     href={`/dashboard/${id}/${channelId}/feed`}
                   >
                     <div
-                      className={`flex h-7 cursor-pointer items-center rounded-md pl-6 pr-2 transition-colors hover:bg-[#f1f3f9] ${
+                      className={`my-[2px] flex h-7 cursor-pointer items-center rounded-md pl-6 pr-2 transition-colors hover:bg-[#f1f3f9] ${
                         router.asPath === `/dashboard/${id}/${channelId}/feed`
                           ? "bg-[#f1f3f9]"
                           : "hover:bg-[#f1f3f9]"

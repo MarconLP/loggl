@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { InboxIcon } from "@heroicons/react/24/solid";
+import { EllipsisHorizontalIcon, InboxIcon } from "@heroicons/react/24/solid";
 import { signIn, useSession } from "next-auth/react";
 
 import { api } from "~/utils/api";
 import AccountMenu from "~/components/AccountMenu";
 import LoadingSpinner from "~/components/LoadingSpinner";
+import ProjectMoreMenu from "~/components/ProjectMoreMenu";
 
 export default function Sidebar() {
   const { data: session } = useSession({
@@ -51,7 +52,7 @@ export default function Sidebar() {
                 <div key={id} className="">
                   <Link key={id} href={`/dashboard/${id}/feed`}>
                     <div
-                      className={`my-[2px] flex h-7 cursor-pointer items-center rounded-md px-2 pl-4 transition-colors hover:bg-[#f1f3f9] ${
+                      className={`my-[2px] flex h-7 cursor-pointer items-center justify-between rounded-md px-2 pl-4 transition-colors hover:bg-[#f1f3f9] ${
                         router.asPath === `/dashboard/${id}/feed`
                           ? "bg-[#f1f3f9]"
                           : "hover:bg-[#f1f3f9]"
@@ -60,6 +61,7 @@ export default function Sidebar() {
                       <span className="text-[13px] font-medium text-[#282A30]">
                         {name}
                       </span>
+                      <ProjectMoreMenu projectId={id} />
                     </div>
                   </Link>
                   {channels.map(({ id: channelId, name }) => (

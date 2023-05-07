@@ -46,7 +46,7 @@ export default function Sidebar() {
             </span>
           </div>
           <div className="mt-1 flex flex-col">
-            {user?.user?.projects ? (
+            {session && user?.user?.projects ? (
               user.user.projects.map(({ id, name, channels }) => (
                 <div key={id} className="">
                   <Link key={id} href={`/dashboard/${id}/feed`}>

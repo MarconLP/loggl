@@ -34,7 +34,14 @@ export default async function handler(
     });
   }
 
-  const { project, channel, event, description, icon, notify } = response.data;
+  const {
+    project,
+    channel,
+    event,
+    description,
+    icon,
+    notify: _notify,
+  } = response.data;
 
   const projectDoc = await prisma.project.findMany({
     where: {

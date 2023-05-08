@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { EllipsisHorizontalIcon, InboxIcon } from "@heroicons/react/24/solid";
+import { ChevronDoubleLeftIcon, InboxIcon } from "@heroicons/react/24/solid";
+import { useAtom } from "jotai";
 import { signIn, useSession } from "next-auth/react";
 
 import { api } from "~/utils/api";
+import { sidebarOpenAtom } from "~/utils/atoms";
 import AccountMenu from "~/components/AccountMenu";
 import ChannelMoreMenu from "~/components/ChannelMoreMenu";
 import LoadingSpinner from "~/components/LoadingSpinner";
@@ -18,11 +20,19 @@ export default function Sidebar() {
   });
   const router = useRouter();
   const { data: projects } = api.project.get.useQuery();
+  const [open, setOpen] = useAtom(sidebarOpenAtom);
 
   return (
-    <div className="flex w-[220px] flex-shrink-0 flex-col border-r border-[#E7E9EB]">
-      <div className="flex h-[62px] items-center border-b border-[#E7E9EB]">
+    <div
+      className={`absolute flex h-full w-[220px] flex-shrink-0 flex-col border-r border-[#E7E9EB] duration-200 ease-in-out ${
+        open ? "translate-x-0" : "-translate-x-full"
+      }`}
+    >
+      <div className="flex h-[62px] items-center justify-between border-b border-[#E7E9EB]">
         <span className="ml-4">Loggl</span>
+        <div className="mr-4 cursor-pointer p-1" onClick={() => setOpen(false)}>
+          <ChevronDoubleLeftIcon className="h-5 w-5" />
+        </div>
       </div>
       <div className="px-3 pt-3 text-[13px]">
         <div>

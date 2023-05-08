@@ -32,10 +32,10 @@ export default function NotificationMoreMenu({ notificationId }: Props) {
   });
 
   return (
-    <Menu as="div" className="relative text-left">
+    <Menu as="div" className="absolute text-left">
       <div>
-        <Menu.Button className="text-md hidden h-4 w-4 items-center justify-center group-hover:flex">
-          <EllipsisHorizontalIcon className="h-8 w-8" />
+        <Menu.Button className="text-md flex h-4 w-4 items-center justify-center">
+          <EllipsisHorizontalIcon className="absolute h-4 w-4 opacity-0 group-hover:opacity-100" />
         </Menu.Button>
       </div>
       <Transition

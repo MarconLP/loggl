@@ -24,7 +24,7 @@ export default function FeedList({ notifications }: Props) {
         ({ id, event, description, timestamp, icon }) => (
           <div
             key={id}
-            className="group mt-6 flex w-[480px] flex-row rounded-lg border border-[#00000014] p-6 text-[#474747]"
+            className="group mx-2 mt-6 flex w-full max-w-[480px] flex-row rounded-lg border border-[#00000014] p-6 text-[#474747]"
           >
             <div className="mr-4 flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border border-[#00000014] bg-[#dad1bf1a]">
               {icon}
@@ -33,14 +33,14 @@ export default function FeedList({ notifications }: Props) {
               <div>
                 <span className="font-bold">{event}</span>
               </div>
-              <div className="flex flex-row items-end justify-between">
+              <div className="flex flex-row">
                 <span>{description}</span>
-                <div>
-                  <span className="block text-xs group-hover:hidden">
-                    {dayjs(timestamp).fromNow(true)}
-                  </span>
-                  <NotificationMoreMenu notificationId={id} />
-                </div>
+              </div>
+              <div className="flex h-4 justify-end">
+                <span className="block text-xs group-hover:hidden">
+                  {dayjs(timestamp).fromNow(true)}
+                </span>
+                <NotificationMoreMenu notificationId={id} />
               </div>
             </div>
           </div>

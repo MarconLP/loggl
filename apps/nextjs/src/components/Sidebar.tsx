@@ -24,7 +24,7 @@ export default function Sidebar() {
 
   return (
     <div
-      className={`absolute flex h-full w-[220px] flex-shrink-0 flex-col border-r border-[#E7E9EB] duration-200 ease-in-out ${
+      className={`absolute flex h-full w-full flex-shrink-0 flex-col border-r border-[#E7E9EB] bg-white duration-200 ease-in-out sm:w-[220px] ${
         open ? "translate-x-0" : "-translate-x-full"
       }`}
     >

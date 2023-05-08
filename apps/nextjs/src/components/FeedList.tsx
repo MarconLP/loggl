@@ -1,10 +1,14 @@
 import Link from "next/link";
 import { SignalSlashIcon } from "@heroicons/react/24/solid";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 
 import { type RouterOutputs } from "@acme/api";
 
 import { api } from "~/utils/api";
 import NewProjectDialog from "~/components/NewProjectDialog";
+
+dayjs.extend(relativeTime);
 
 interface Props {
   notifications: RouterOutputs["feed"]["getAll"];
@@ -28,9 +32,11 @@ export default function FeedList({ notifications }: Props) {
               <div>
                 <span className="font-bold">{event}</span>
               </div>
-              <div className="flex flex-row justify-between">
+              <div className="flex flex-row items-end justify-between">
                 <span>{description}</span>
-                <span>{new Date(timestamp).getTime()}</span>
+                <span className="text-xs">
+                  {dayjs(timestamp).fromNow(true)}
+                </span>
               </div>
             </div>
           </div>

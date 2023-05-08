@@ -46,18 +46,17 @@ export default function FeedList({ notifications }: Props) {
         <NewProjectDialog />
       ) : (
         notifications.notifications.length === 0 && (
-          <Link
-            href="https://docs.loggl.net/"
-            className="flex h-full flex-col items-center justify-center"
-          >
+          <div className="flex h-full flex-col items-center justify-center">
             <SignalSlashIcon className="h-16 w-16" />
-            <span className="text-palette-900 mt-2 text-base font-medium leading-6 md:text-base">
+            <span className="text-palette-900 mb-6 mt-2 text-base font-medium leading-6 md:text-base">
               No events found
             </span>
-            <button className="mt-6 inline-flex items-center rounded-md border border-transparent bg-[#171717] px-4 py-2 text-sm font-medium text-white hover:bg-[#404040] focus:outline-none">
-              Documentation
-            </button>
-          </Link>
+            <Link href="https://docs.loggl.net/">
+              <button className="inline-flex items-center rounded-md border border-transparent bg-[#171717] px-4 py-2 text-sm font-medium text-white hover:bg-[#404040] focus:outline-none">
+                Documentation
+              </button>
+            </Link>
+          </div>
         )
       )}
     </div>

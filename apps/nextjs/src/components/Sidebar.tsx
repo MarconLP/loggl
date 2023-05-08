@@ -22,9 +22,13 @@ export default function Sidebar() {
   const { data: projects } = api.project.get.useQuery();
   const [open, setOpen] = useAtom(sidebarOpenAtom);
 
+  const clickItem = () => {
+    if (window.innerWidth < 640) setTimeout(() => setOpen(false), 1);
+  };
+
   return (
     <div
-      className={`absolute flex h-full w-full flex-shrink-0 flex-col border-r border-[#E7E9EB] bg-white duration-200 ease-in-out sm:w-[220px] ${
+      className={`absolute z-10 flex h-full w-full flex-shrink-0 flex-col border-r border-[#E7E9EB] bg-white duration-200 ease-in-out sm:w-[220px] ${
         open ? "translate-x-0" : "-translate-x-full"
       }`}
     >
@@ -36,7 +40,7 @@ export default function Sidebar() {
       </div>
       <div className="px-3 pt-3 text-[13px]">
         <div>
-          <Link href="/dashboard/feed">
+          <Link onClick={clickItem} href="/dashboard/feed">
             <div
               className={`my-[1px] flex h-[27px] cursor-pointer flex-row items-center rounded pl-2 transition-colors ${
                 router.asPath === "/dashboard/feed"
@@ -61,7 +65,11 @@ export default function Sidebar() {
             {session && projects ? (
               projects?.map(({ id, name, channels }) => (
                 <div key={id} className="">
-                  <Link key={id} href={`/dashboard/${id}/feed`}>
+                  <Link
+                    onClick={clickItem}
+                    key={id}
+                    href={`/dashboard/${id}/feed`}
+                  >
                     <div
                       className={`my-[2px] flex h-7 cursor-pointer items-center justify-between rounded-md px-2 pl-4 transition-colors hover:bg-[#f1f3f9] ${
                         router.asPath === `/dashboard/${id}/feed`
@@ -77,6 +85,7 @@ export default function Sidebar() {
                   </Link>
                   {channels.map(({ id: channelId, name }) => (
                     <Link
+                      onClick={clickItem}
                       key={channelId}
                       href={`/dashboard/${id}/${channelId}/feed`}
                     >

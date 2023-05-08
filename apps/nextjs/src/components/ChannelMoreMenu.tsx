@@ -6,10 +6,10 @@ import { EllipsisHorizontalIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { api } from "~/utils/api";
 
 interface Props {
-  projectId: string;
+  channelId: string;
 }
 
-export default function ProjectMoreMenu({ projectId }: Props) {
+export default function ChannelMoreMenu({ channelId }: Props) {
   const router = useRouter();
   const utils = api.useContext();
 
@@ -19,13 +19,13 @@ export default function ProjectMoreMenu({ projectId }: Props) {
       icon: <TrashIcon />,
       props: {
         onClick: () => {
-          deleteProjectMutation.mutate({ id: projectId });
+          deleteChannelMutation.mutate({ id: channelId });
         },
       },
     },
   ];
 
-  const deleteProjectMutation = api.project.delete.useMutation({
+  const deleteChannelMutation = api.channel.delete.useMutation({
     onMutate: async () => {
       await utils.project.get.cancel();
       const previousValue = utils.project.get.getData();
@@ -39,6 +39,7 @@ export default function ProjectMoreMenu({ projectId }: Props) {
     },
     onSettled: () => {
       void utils.project.get.invalidate();
+      void utils.feed.getAll.invalidate();
       void router.push("/dashboard/feed");
     },
   });
@@ -46,7 +47,7 @@ export default function ProjectMoreMenu({ projectId }: Props) {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
-        <Menu.Button className="flex h-6 w-6 items-center justify-center">
+        <Menu.Button className="flex h-6 w-6 items-center justify-center opacity-0 group-hover/channel:opacity-100">
           <EllipsisHorizontalIcon className="h-4 w-4" />
         </Menu.Button>
       </div>

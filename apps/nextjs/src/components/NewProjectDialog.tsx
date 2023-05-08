@@ -8,9 +8,9 @@ export default function NewProjectDialog() {
   const [open, setOpen] = useState<boolean>(false);
   const [name, setName] = useState<string>("");
   const utils = api.useContext();
-  const createProjectMutation = api.projects.create.useMutation({
+  const createProjectMutation = api.project.create.useMutation({
     onSuccess: async () => {
-      await utils.projects.get.invalidate();
+      await utils.project.get.invalidate();
     },
   });
 

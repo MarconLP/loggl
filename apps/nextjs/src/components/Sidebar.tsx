@@ -5,6 +5,7 @@ import { signIn, useSession } from "next-auth/react";
 
 import { api } from "~/utils/api";
 import AccountMenu from "~/components/AccountMenu";
+import ChannelMoreMenu from "~/components/ChannelMoreMenu";
 import LoadingSpinner from "~/components/LoadingSpinner";
 import ProjectMoreMenu from "~/components/ProjectMoreMenu";
 
@@ -16,7 +17,7 @@ export default function Sidebar() {
     },
   });
   const router = useRouter();
-  const { data: projects } = api.projects.get.useQuery();
+  const { data: projects } = api.project.get.useQuery();
 
   return (
     <div className="flex w-[220px] flex-shrink-0 flex-col border-r border-[#E7E9EB]">
@@ -70,7 +71,7 @@ export default function Sidebar() {
                       href={`/dashboard/${id}/${channelId}/feed`}
                     >
                       <div
-                        className={`my-[2px] flex h-7 cursor-pointer items-center rounded-md pl-6 pr-2 transition-colors hover:bg-[#f1f3f9] ${
+                        className={`group/channel my-[2px] flex h-7 cursor-pointer items-center justify-between rounded-md pl-6 pr-2 transition-colors hover:bg-[#f1f3f9] ${
                           router.asPath === `/dashboard/${id}/${channelId}/feed`
                             ? "bg-[#f1f3f9]"
                             : "hover:bg-[#f1f3f9]"
@@ -79,6 +80,7 @@ export default function Sidebar() {
                         <span className="text-[13px] font-medium text-[#3c4149]">
                           # {name}
                         </span>
+                        <ChannelMoreMenu channelId={channelId} />
                       </div>
                     </Link>
                   ))}

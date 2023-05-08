@@ -1,4 +1,5 @@
 import { authRouter } from "./router/auth";
+import { channelRouter } from "./router/channel";
 import { feedRouter } from "./router/feed";
 import { projectRouter } from "./router/project";
 import { createTRPCRouter } from "./trpc";
@@ -6,7 +7,8 @@ import { createTRPCRouter } from "./trpc";
 export const appRouter = createTRPCRouter({
   auth: authRouter,
   feed: feedRouter,
-  projects: projectRouter,
+  project: projectRouter,
+  channel: channelRouter,
 });
 
 // export type definition of API

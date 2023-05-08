@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { InboxIcon, SignalSlashIcon } from "@heroicons/react/24/solid";
+import { SignalSlashIcon } from "@heroicons/react/24/solid";
 
 import { type RouterOutputs } from "@acme/api";
 
@@ -11,7 +11,7 @@ interface Props {
 }
 
 export default function FeedList({ notifications }: Props) {
-  const { data: projects } = api.projects.get.useQuery();
+  const { data: projects } = api.project.get.useQuery();
 
   return (
     <div className="flex grow flex-col items-center justify-start">

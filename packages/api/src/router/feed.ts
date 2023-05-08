@@ -8,6 +8,9 @@ export const feedRouter = createTRPCRouter({
       where: {
         userId: ctx.session.user.id,
       },
+      orderBy: {
+        timestamp: "desc",
+      },
     });
     return {
       notifications,
@@ -20,6 +23,9 @@ export const feedRouter = createTRPCRouter({
         where: {
           projectId: input.projectId,
         },
+        orderBy: {
+          timestamp: "desc",
+        },
       });
       return {
         notifications,
@@ -31,6 +37,9 @@ export const feedRouter = createTRPCRouter({
       const notifications = await ctx.prisma.notification.findMany({
         where: {
           channelId: input.channelId,
+        },
+        orderBy: {
+          timestamp: "desc",
         },
       });
       return {

@@ -1,9 +1,12 @@
 import { Fragment } from "react";
 import Image from "next/image";
 import { Menu, Transition } from "@headlessui/react";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
+import defaultProfileIcon from "~/assets/default profile icon.jpg";
 
 export default function AccountMenu() {
+  const {data:session} = useSession()
+
   const items = [
     {
       name: "Settings",
@@ -26,18 +29,20 @@ export default function AccountMenu() {
   return (
     <Menu as="div" className="relative w-full">
       <div>
-        <Menu.Button className="flex h-[56px] w-full cursor-pointer flex-row items-center gap-x-4 border-t border-[#E7E9EB] px-6 py-3 hover:bg-[#f1f3f9]">
-          <div className="h-8 w-8 overflow-hidden rounded-full">
-            <Image
-              width={32}
-              height={32}
-              alt="profile icon"
-              unoptimized
-              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-            />
-          </div>
-          <span className="font-semibold">Marcus</span>
-        </Menu.Button>
+        {session?.user ? (
+          <Menu.Button className="flex h-[56px] w-full cursor-pointer flex-row items-center gap-x-4 border-t border-[#E7E9EB] px-6 py-3 hover:bg-[#f1f3f9]">
+            <div className="h-8 w-8 overflow-hidden rounded-full">
+              <Image
+                width={32}
+                height={32}
+                alt="profile icon"
+                unoptimized
+                src={session.user?.image ?? defaultProfileIcon}
+              />
+            </div>
+            <span className="font-semibold">{session.user.name}</span>
+          </Menu.Button>
+        ): null}
       </div>
       <Transition
         as={Fragment}

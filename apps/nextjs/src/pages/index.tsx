@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import Link from "next/link";
 
 const Home: NextPage = () => {
   return (
@@ -11,6 +12,7 @@ const Home: NextPage = () => {
       </Head>
       <main className="flex h-screen flex-row overflow-auto text-[#3c4149]">
         <span>landing page</span>
+        <Link href="/dashboard/feed">Dashboard</Link>
       </main>
     </>
   );

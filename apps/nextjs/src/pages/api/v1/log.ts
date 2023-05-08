@@ -14,6 +14,14 @@ export default async function handler(
     });
   }
 
+  const [, token] = req.headers['authorization'].split(' ');
+
+  if (!token) {
+    return false;
+  }
+
+  const userId = token
+
   const schema = z.object({
     project: z.string(),
     channel: z.string(),
@@ -40,12 +48,12 @@ export default async function handler(
     event,
     description,
     icon,
-    notify: _notify,
+    notify,
   } = response.data;
 
   const projectDoc = await prisma.project.findMany({
     where: {
-      userId: "clhdcl57p0000v0wglr4w822q",
+      userId,
       name: project,
     },
   });
@@ -84,9 +92,13 @@ export default async function handler(
       icon,
       projectId: projectDoc[0].id,
       channelId: channelDoc[0].id,
-      userId: "clhdcl57p0000v0wglr4w822q",
+      userId,
     },
   });
+
+  if (notify) {
+    console.log('send push notification to user')
+  }
 
   console.log(notification);
 

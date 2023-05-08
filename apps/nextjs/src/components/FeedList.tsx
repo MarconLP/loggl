@@ -7,6 +7,7 @@ import { type RouterOutputs } from "@acme/api";
 
 import { api } from "~/utils/api";
 import NewProjectDialog from "~/components/NewProjectDialog";
+import NotificationMoreMenu from "~/components/NotificationMoreMenu";
 
 dayjs.extend(relativeTime);
 
@@ -23,7 +24,7 @@ export default function FeedList({ notifications }: Props) {
         ({ id, event, description, timestamp, icon }) => (
           <div
             key={id}
-            className="mt-6 flex w-[480px] flex-row rounded-lg border border-[#00000014] p-6 text-[#474747]"
+            className="group mt-6 flex w-[480px] flex-row rounded-lg border border-[#00000014] p-6 text-[#474747]"
           >
             <div className="mr-4 flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border border-[#00000014] bg-[#dad1bf1a]">
               {icon}
@@ -34,9 +35,12 @@ export default function FeedList({ notifications }: Props) {
               </div>
               <div className="flex flex-row items-end justify-between">
                 <span>{description}</span>
-                <span className="text-xs">
-                  {dayjs(timestamp).fromNow(true)}
-                </span>
+                <div>
+                  <span className="block text-xs group-hover:hidden">
+                    {dayjs(timestamp).fromNow(true)}
+                  </span>
+                  <NotificationMoreMenu notificationId={id} />
+                </div>
               </div>
             </div>
           </div>

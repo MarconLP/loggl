@@ -37,4 +37,16 @@ export const feedRouter = createTRPCRouter({
         notifications,
       };
     }),
+  delete: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx: { prisma, session }, input }) => {
+      const project = await prisma.notification.deleteMany({
+        where: {
+          userId: session.user.id,
+          id: input.id,
+        },
+      });
+
+      return project;
+    }),
 });

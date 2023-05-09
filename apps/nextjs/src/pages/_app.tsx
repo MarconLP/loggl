@@ -1,15 +1,58 @@
 import "../styles/globals.css";
+import { useEffect } from "react";
 import type { AppType } from "next/app";
 import Head from "next/head";
+import firebase from "firebase/app";
 import type { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 
 import { api } from "~/utils/api";
+import { firebaseCloudMessaging } from "~/utils/firebase";
+import "vercel-toast/css";
+import { createToast } from "vercel-toast";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
+  useEffect(() => {
+    void setToken();
+
+    // Event listener that listens for the push notification event in the background
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.addEventListener("message", (event) => {
+        console.log("event for the service worker", event);
+      });
+    }
+
+    // Calls the getMessage() function if the token is there
+    async function setToken() {
+      try {
+        const token: string = (await firebaseCloudMessaging.init()) as string;
+        if (token) {
+          console.log("token", token);
+
+          // send token to server
+
+          getMessage();
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  });
+
+  // Get the push notification message and triggers a toast to show it
+  function getMessage() {
+    const messaging = firebase.messaging();
+    messaging.onMessage((message) => {
+      console.log(message);
+      createToast("test toast to check if its working", {
+        timeout: 3000,
+      });
+    });
+  }
+
   return (
     <>
       <Head>

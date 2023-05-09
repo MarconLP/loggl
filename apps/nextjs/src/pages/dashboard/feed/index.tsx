@@ -32,8 +32,6 @@ const Feed: NextPage = () => {
       [],
     ) ?? [];
 
-  console.log(notifications);
-
   return (
     <>
       <Head>

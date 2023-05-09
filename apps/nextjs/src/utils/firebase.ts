@@ -24,8 +24,7 @@ const firebaseCloudMessaging = {
         if (status && status === "granted") {
           // Get new token from Firebase
           const fcm_token = await messaging.getToken({
-            vapidKey:
-              "BLCsJWtMIf-oeao5UF8vj-1iGOvh3a5r_NG2XVJET_iAT-br-dJr45sO_V0PGe0jsXAPMKp4oEu8sAs61UVG9R4",
+            vapidKey: env.NEXT_PUBLIC_VAPID_KEY,
           });
 
           if (fcm_token) {

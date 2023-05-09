@@ -48,6 +48,9 @@ export const feedRouter = createTRPCRouter({
         where: {
           projectId: input.projectId,
         },
+        orderBy: {
+          timestamp: "desc",
+        },
       });
 
       let nextCursor: typeof input.cursor | undefined = undefined;
@@ -75,6 +78,9 @@ export const feedRouter = createTRPCRouter({
         cursor: input.cursor ? { id: input.cursor } : undefined,
         where: {
           channelId: input.channelId,
+        },
+        orderBy: {
+          timestamp: "desc",
         },
       });
 

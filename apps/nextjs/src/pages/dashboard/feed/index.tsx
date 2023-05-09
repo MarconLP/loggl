@@ -3,7 +3,7 @@ import Head from "next/head";
 import { ChevronDoubleRightIcon } from "@heroicons/react/24/solid";
 import { useAtom } from "jotai";
 
-import { api } from "~/utils/api";
+import { api, type RouterOutputs } from "~/utils/api";
 import { sidebarOpenAtom } from "~/utils/atoms";
 import FeedList from "~/components/FeedList";
 import LoadingSpinner from "~/components/LoadingSpinner";
@@ -11,7 +11,28 @@ import Sidebar from "~/components/Sidebar";
 
 const Feed: NextPage = () => {
   const [sidebarOpen, setSidebarOpen] = useAtom(sidebarOpenAtom);
-  const { data: notifications, isLoading } = api.feed.getAll.useQuery();
+  const { data, fetchNextPage, isLoading } = api.feed.getAll.useInfiniteQuery(
+    {
+      limit: 10,
+    },
+    {
+      getNextPageParam: (lastPage) => lastPage.nextCursor,
+    },
+  );
+
+  const notifications =
+    data?.pages.reduce(
+      (acc: RouterOutputs["feed"]["getAll"]["notifications"], currentPage) => {
+        if (currentPage.notifications) {
+          return [...acc, ...currentPage.notifications];
+        }
+
+        return [...acc];
+      },
+      [],
+    ) ?? [];
+
+  console.log(notifications);
 
   return (
     <>
@@ -39,7 +60,12 @@ const Feed: NextPage = () => {
             <span className="ml-4 font-bold">Feed</span>
           </div>
           {!isLoading && notifications ? (
-            <FeedList notifications={notifications} />
+            <>
+              <FeedList
+                fetchNextPage={fetchNextPage}
+                notifications={notifications}
+              />
+            </>
           ) : (
             <div className="mt-4 flex justify-center">
               <LoadingSpinner />

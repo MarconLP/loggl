@@ -2,6 +2,7 @@ import Link from "next/link";
 import { SignalSlashIcon } from "@heroicons/react/24/solid";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { Virtuoso } from "react-virtuoso";
 
 import { type RouterOutputs } from "@acme/api";
 
@@ -12,44 +13,56 @@ import NotificationMoreMenu from "~/components/NotificationMoreMenu";
 dayjs.extend(relativeTime);
 
 interface Props {
-  notifications: RouterOutputs["feed"]["getAll"];
+  notifications: RouterOutputs["feed"]["getAll"]["notifications"];
+  fetchNextPage: () => any;
 }
 
-export default function FeedList({ notifications }: Props) {
+export default function FeedList({ notifications, fetchNextPage }: Props) {
   const { data: projects } = api.project.get.useQuery();
 
   return (
     <div className="flex grow flex-col items-center justify-start">
-      {notifications.notifications.map(
-        ({ id, event, description, timestamp, icon }) => (
-          <div
-            key={id}
-            className="group mx-2 mt-6 flex w-full max-w-[480px] flex-row rounded-lg border border-[#00000014] p-6 text-[#474747]"
-          >
-            <div className="mr-4 flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border border-[#00000014] bg-[#dad1bf1a]">
-              {icon}
-            </div>
-            <div className="flex grow flex-col">
-              <div>
-                <span className="font-bold">{event}</span>
+      {notifications.length > 0 ? (
+        <div className="h-full w-full overflow-y-auto">
+          <Virtuoso
+            data={notifications}
+            defaultItemHeight={114}
+            endReached={fetchNextPage}
+            totalCount={notifications.length}
+            itemContent={(i, { id, event, description, timestamp, icon }) => (
+              <div className="px-2 pt-6">
+                <div
+                  key={id}
+                  className="group mx-auto flex w-full max-w-[480px] flex-row rounded-lg border border-[#00000014] p-6 text-[#474747]"
+                >
+                  <div className="mr-4 flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border border-[#00000014] bg-[#dad1bf1a]">
+                    {icon}
+                  </div>
+                  <div className="flex grow flex-col">
+                    <div>
+                      <span className="font-bold">{event}</span>
+                    </div>
+                    <div className="flex flex-row">
+                      <span>{description}</span>
+                    </div>
+                    <div className="flex h-4 justify-end">
+                      <span className="block text-xs group-hover:hidden">
+                        {dayjs(timestamp).fromNow(true)}
+                      </span>
+                      <NotificationMoreMenu notificationId={id} />
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="flex flex-row">
-                <span>{description}</span>
-              </div>
-              <div className="flex h-4 justify-end">
-                <span className="block text-xs group-hover:hidden">
-                  {dayjs(timestamp).fromNow(true)}
-                </span>
-                <NotificationMoreMenu notificationId={id} />
-              </div>
-            </div>
-          </div>
-        ),
-      )}
+            )}
+          />
+        </div>
+      ) : null}
+
       {projects && projects?.length <= 0 ? (
         <NewProjectDialog />
       ) : (
-        notifications.notifications.length === 0 && (
+        notifications.length === 0 && (
           <div className="flex h-full flex-col items-center justify-center">
             <SignalSlashIcon className="h-16 w-16" />
             <span className="text-palette-900 mb-6 mt-2 text-base font-medium leading-6 md:text-base">

@@ -14,13 +14,13 @@ export default async function handler(
     });
   }
 
-  const [, token] = req.headers['authorization'].split(' ');
+  const [, token] = req.headers["authorization"]?.split(" ") ?? [];
 
   if (!token) {
     return false;
   }
 
-  const userId = token
+  const userId = token;
 
   const schema = z.object({
     project: z.string(),
@@ -42,14 +42,7 @@ export default async function handler(
     });
   }
 
-  const {
-    project,
-    channel,
-    event,
-    description,
-    icon,
-    notify,
-  } = response.data;
+  const { project, channel, event, description, icon, notify } = response.data;
 
   const projectDoc = await prisma.project.findMany({
     where: {
@@ -97,7 +90,7 @@ export default async function handler(
   });
 
   if (notify) {
-    console.log('send push notification to user')
+    console.log("send push notification to user");
   }
 
   console.log(notification);

@@ -44,7 +44,7 @@ export default async function handler(
     userId = tokenDoc[0].userId;
   } catch (err) {
     return res.status(401).json({
-      error: { message: err?.message ?? "Something went wrong" },
+      error: { message: "Something went wrong" },
     });
   }
 
@@ -122,8 +122,8 @@ export default async function handler(
         body: description,
       },
       data: {
-        projectId: projectDoc[0].id,
-        channelId: channelDoc[0].id,
+        projectId: projectDoc[0]?.id ?? "",
+        channelId: channelDoc[0]?.id ?? "",
       },
       token,
     }));

@@ -48,8 +48,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
   function getMessage() {
     const messaging = firebase.messaging();
     messaging.onMessage((message) => {
-      console.log(message);
-      createToast("test toast to check if its working", {
+      createToast(message?.notification?.title ?? "A new event", {
         timeout: 3000,
       });
     });

@@ -3,6 +3,8 @@ import { z } from "zod";
 
 import { prisma } from "@acme/db";
 
+import admin from "~/utils/firebaseAdmin";
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
@@ -27,7 +29,7 @@ export default async function handler(
     channel: z.string(),
     event: z.string(),
     description: z.string(),
-    icon: z.string(),
+    icon: z.string().emoji(),
     notify: z.boolean(),
   });
 
@@ -78,7 +80,7 @@ export default async function handler(
       error: "Something went wrong",
     });
 
-  const notification = await prisma.notification.create({
+  const _notification = await prisma.notification.create({
     data: {
       event,
       description,
@@ -90,10 +92,27 @@ export default async function handler(
   });
 
   if (notify) {
-    console.log("send push notification to user");
+    const message = {
+      notification: {
+        title: event,
+        body: description,
+      },
+      data: {
+        projectId: projectDoc[0].id,
+        channelId: channelDoc[0].id,
+      },
+      token:
+        "fBDNeHbBXrD3UmbQxn3PMh:APA91bEniE9odzuGIRMnMQAmv_gpS6WHZlYL5a22lDBS47yFxHR3EpOSbqo6R2iT1L38DOwt0kC6a4bGHLAH1mP3cD61KS3IKe_XHTQE3lM69VAcizAE0XBPMANxHboJm6xQfp6QfmgI",
+    };
+
+    try {
+      const response = await admin.messaging().send(message);
+      console.log("Successfully sent message:", response);
+    } catch (error) {
+      console.log("Error sending message:", error);
+    }
   }
 
-  console.log(notification);
-
+  console.log("event successfully created");
   res.send("event successfully created");
 }

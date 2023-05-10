@@ -1,18 +1,21 @@
 import { Fragment } from "react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { Menu, Transition } from "@headlessui/react";
 import { signOut, useSession } from "next-auth/react";
+
 import defaultProfileIcon from "~/assets/default profile icon.jpg";
 
 export default function AccountMenu() {
-  const {data:session} = useSession()
+  const { data: session } = useSession();
+  const router = useRouter();
 
   const items = [
     {
       name: "Settings",
       props: {
         onClick: () => {
-          console.log("Settings");
+          void router.push("/settings");
         },
       },
     },
@@ -42,7 +45,7 @@ export default function AccountMenu() {
             </div>
             <span className="font-semibold">{session.user.name}</span>
           </Menu.Button>
-        ): null}
+        ) : null}
       </div>
       <Transition
         as={Fragment}

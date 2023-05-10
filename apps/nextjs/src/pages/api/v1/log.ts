@@ -19,10 +19,27 @@ export default async function handler(
   const [, token] = req.headers["authorization"]?.split(" ") ?? [];
 
   if (!token) {
-    return false;
+    return res.status(403).json({
+      error: { message: "Forbidden" },
+    });
   }
 
-  const userId = token;
+  let userId: string | null = null;
+  try {
+    const tokenDoc = await prisma.apiToken.findMany({
+      where: {
+        token,
+      },
+    });
+    if (!tokenDoc[0]?.userId) throw Error("Forbidden");
+    userId = tokenDoc[0].userId;
+  } catch (err) {
+    return res.status(401).json({
+      error: { message: err?.message ?? "Something went wrong" },
+    });
+  }
+
+  return res.send("te");
 
   const schema = z.object({
     project: z.string(),

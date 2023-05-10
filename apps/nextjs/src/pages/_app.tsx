@@ -15,6 +15,8 @@ const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
+  const registerPushTokenMutation = api.auth.registerPushToken.useMutation();
+
   useEffect(() => {
     void setToken();
 
@@ -32,7 +34,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         if (token) {
           console.log("token", token);
 
-          // send token to server
+          registerPushTokenMutation.mutate({ token });
 
           getMessage();
         }

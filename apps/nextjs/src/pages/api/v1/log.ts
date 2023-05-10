@@ -25,21 +25,28 @@ export default async function handler(
   }
 
   let userId: string | null = null;
+  let pushTokens: string[] = [];
   try {
     const tokenDoc = await prisma.apiToken.findMany({
       where: {
         token,
       },
+      include: {
+        user: {
+          include: {
+            pushTokens: true,
+          },
+        },
+      },
     });
     if (!tokenDoc[0]?.userId) throw Error("Forbidden");
+    pushTokens = tokenDoc[0].user.pushTokens.map((x) => x.token);
     userId = tokenDoc[0].userId;
   } catch (err) {
     return res.status(401).json({
       error: { message: err?.message ?? "Something went wrong" },
     });
   }
-
-  return res.send("te");
 
   const schema = z.object({
     project: z.string(),
@@ -109,7 +116,7 @@ export default async function handler(
   });
 
   if (notify) {
-    const message = {
+    const messages = pushTokens.map((token) => ({
       notification: {
         title: event,
         body: description,
@@ -118,12 +125,11 @@ export default async function handler(
         projectId: projectDoc[0].id,
         channelId: channelDoc[0].id,
       },
-      token:
-        "fBDNeHbBXrD3UmbQxn3PMh:APA91bEniE9odzuGIRMnMQAmv_gpS6WHZlYL5a22lDBS47yFxHR3EpOSbqo6R2iT1L38DOwt0kC6a4bGHLAH1mP3cD61KS3IKe_XHTQE3lM69VAcizAE0XBPMANxHboJm6xQfp6QfmgI",
-    };
+      token,
+    }));
 
     try {
-      const response = await admin.messaging().send(message);
+      const response = await admin.messaging().sendEach(messages);
       console.log("Successfully sent message:", response);
     } catch (error) {
       console.log("Error sending message:", error);

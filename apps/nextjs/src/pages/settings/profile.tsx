@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import Sidebar from "~/components/settings/Sidebar";
 import defaultProfileIcon from "~/assets/default profile icon.jpg";
 
-export default function SettingsPage() {
+export default function ProfileSettingsPage() {
   const { data: session } = useSession();
 
   if (!session) return <span>please go log in</span>;

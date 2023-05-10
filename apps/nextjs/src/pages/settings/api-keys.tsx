@@ -2,7 +2,7 @@ import { useSession } from "next-auth/react";
 
 import Sidebar from "~/components/settings/Sidebar";
 
-export default function SettingsPage() {
+export default function ApiKeysSettingsPage() {
   const { data: session } = useSession();
 
   if (!session) return <span>please go log in</span>;

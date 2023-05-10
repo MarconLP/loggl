@@ -19,6 +19,14 @@ model ApiToken {
   userId String
 }
 
+model PushToken {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token     String   @unique
+  userId    String
+  timestamp DateTime @default(now())
+}
+
 model Project {
   id           String         @id @default(cuid())
   user         User           @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -90,7 +98,8 @@ model User {
   sessions      Session[]
   projects      Project[]
   notifications Notification[]
-  ApiToken      ApiToken[]
+  apiToken      ApiToken[]
+  pushTokens    PushToken[]
 }
 
 model VerificationToken {

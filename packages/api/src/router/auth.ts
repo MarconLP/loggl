@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
 export const authRouter = createTRPCRouter({
@@ -8,4 +10,22 @@ export const authRouter = createTRPCRouter({
     // testing type validation of overridden next-auth Session in @acme/auth package
     return "you can see this secret message!";
   }),
+  registerPushToken: protectedProcedure
+    .input(z.object({ token: z.string() }))
+    .mutation(async ({ ctx: { session, prisma }, input }) => {
+      await prisma.pushToken.upsert({
+        where: {
+          token: input.token,
+        },
+        create: {
+          token: input.token,
+          userId: session.user.id,
+        },
+        update: {
+          token: input.token,
+          userId: session.user.id,
+        },
+      });
+      return "OK";
+    }),
 });

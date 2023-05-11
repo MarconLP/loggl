@@ -11,6 +11,8 @@ import { firebaseCloudMessaging } from "~/utils/firebase";
 import "vercel-toast/css";
 import { createToast } from "vercel-toast";
 
+import CrispChat from "~/components/CrispChat";
+
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
@@ -112,6 +114,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
       </Head>
       <SessionProvider session={session}>
         <Component {...pageProps} />
+        <CrispChat />
       </SessionProvider>
     </>
   );

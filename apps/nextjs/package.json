@@ -26,6 +26,7 @@
     "@trpc/next": "^10.23.0",
     "@trpc/react-query": "^10.23.0",
     "@trpc/server": "^10.23.0",
+    "crisp-sdk-web": "^1.0.18",
     "dayjs": "^1.11.7",
     "firebase": "^8.10.1",
     "firebase-admin": "^11.8.0",

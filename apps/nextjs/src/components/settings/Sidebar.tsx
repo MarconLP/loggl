@@ -56,7 +56,7 @@ export default function Sidebar() {
 
   return (
     <div
-      className={`absolute h-full w-full shrink-0 border-r border-[#E7E9EB] bg-[#f9fafb] p-6 transition-all sm:w-[220px] ${
+      className={`absolute h-full w-full shrink-0 border-r border-[#E7E9EB] bg-[#f9fafb] p-6 transition-transform sm:w-[220px] ${
         open ? "" : "-translate-x-full"
       }`}
     >

@@ -68,7 +68,7 @@ export default function FeedList({ notifications, fetchNextPage }: Props) {
             <span className="text-palette-900 mb-6 mt-2 text-base font-medium leading-6 md:text-base">
               No events found
             </span>
-            <Link href="/docs">
+            <Link target="_blank" href="/docs">
               <button className="inline-flex items-center rounded-md border border-transparent bg-[#171717] px-4 py-2 text-sm font-medium text-white hover:bg-[#404040] focus:outline-none">
                 Documentation
               </button>

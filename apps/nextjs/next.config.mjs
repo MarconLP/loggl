@@ -1,4 +1,5 @@
 import WithPWA from 'next-pwa';
+import Nextra from 'nextra';
 /**
  * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
  * This is especially useful for Docker builds and Linting.
@@ -12,6 +13,11 @@ const withPWA = WithPWA({
   disable: process.env.NODE_ENV !== 'production',
 })
 
+const withNextra = Nextra({
+  theme: "nextra-theme-docs",
+  themeConfig: "./theme.config.tsx",
+})
+
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
@@ -22,4 +28,4 @@ const config = {
   typescript: { ignoreBuildErrors: !!process.env.CI },
 };
 
-export default withPWA(config);
+export default withPWA(withNextra(config));

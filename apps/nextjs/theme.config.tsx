@@ -1,3 +1,4 @@
+import { spans } from "next/dist/build/webpack/plugins/profiling-plugin";
 import { useRouter } from "next/router";
 import { useConfig, type DocsThemeConfig } from "nextra-theme-docs";
 
@@ -83,6 +84,7 @@ const config: DocsThemeConfig = {
     defaultMenuCollapseLevel: 1,
     toggleButton: true,
   },
+  footer: { component: null },
 };
 
 export default config;

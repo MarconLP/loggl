@@ -1,10 +1,5 @@
 {
   "index": "Loggl Docs",
   "quick-start": "Quick Start",
-  "playground": {
-    "title": "Playground",
-    "href": "/playground",
-    "newWindow": true
-  },
   "integrations": "Integrations"
 }

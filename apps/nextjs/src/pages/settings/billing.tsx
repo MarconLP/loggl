@@ -1,9 +1,6 @@
-import Image from "next/image";
-import { TrashIcon } from "@heroicons/react/24/outline";
 import { useSession } from "next-auth/react";
 
 import Sidebar from "~/components/settings/Sidebar";
-import defaultProfileIcon from "~/assets/default profile icon.jpg";
 
 export default function BillingSettingsPage() {
   const { data: session } = useSession();

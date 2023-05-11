@@ -6,9 +6,10 @@ const logo = <span>Loggl Docs</span>;
 
 const config: DocsThemeConfig = {
   project: {
-    link: "https://github.com/shuding/nextra",
+    link: "https://github.com/MarconLP/loggl",
   },
-  docsRepositoryBase: "https://github.com/shuding/nextra/tree/main/docs",
+  docsRepositoryBase:
+    "https://github.com/MarconLP/loggl/tree/main/apps/nextjs/src/pages/docs",
   useNextSeoProps() {
     const { asPath } = useRouter();
     if (asPath !== "/") {

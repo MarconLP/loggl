@@ -26,7 +26,11 @@ export default function BillingSettingsPage() {
           </div>
           <div>
             <button
-              onClick={() => createToast("Not implemented yet")}
+              onClick={() =>
+                createToast("Not implemented yet", {
+                  timeout: 3000,
+                })
+              }
               className="rounded-md bg-[#292929] px-4 py-2 text-white"
             >
               Billing portal

@@ -18,7 +18,9 @@ export default function ApiKeysSettingsPage() {
 
   const handleCopy = (token: string) => {
     void navigator.clipboard.writeText(token);
-    createToast("Copied API Token");
+    createToast("Copied API Token", {
+      timeout: 3000,
+    });
   };
 
   const handleDelete = (id: string) => {

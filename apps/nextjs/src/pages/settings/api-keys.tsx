@@ -11,10 +11,16 @@ import Sidebar from "~/components/settings/Sidebar";
 
 export default function ApiKeysSettingsPage() {
   const { data: apiKeys } = api.account.getApiKeys.useQuery();
+  const utils = api.useContext();
   const { data: session } = useSession({
     required: true,
     onUnauthenticated() {
       void signIn();
+    },
+  });
+  const deleteApiMutation = api.account.deleteApiKey.useMutation({
+    onSuccess: async () => {
+      await utils.account.getApiKeys.invalidate();
     },
   });
 
@@ -23,8 +29,8 @@ export default function ApiKeysSettingsPage() {
     createToast("Copied API Token");
   };
 
-  const handleDelete = () => {
-    console.log("delete");
+  const handleDelete = (id: string) => {
+    deleteApiMutation.mutate({ id });
   };
 
   if (!session || !apiKeys)
@@ -64,7 +70,7 @@ export default function ApiKeysSettingsPage() {
           ) : (
             <div className="flex flex-col items-start">
               <div className="mb-8 mt-6 w-full">
-                {apiKeys.map(({ name, token }) => (
+                {apiKeys.map(({ id, name, token }) => (
                   <div
                     key={name}
                     className="border border-t-0 first:rounded-t-md first:border-t last:rounded-b-md"
@@ -81,7 +87,7 @@ export default function ApiKeysSettingsPage() {
                           <CopyIcon />
                         </button>
                         <button
-                          onClick={handleDelete}
+                          onClick={() => handleDelete(id)}
                           className="flex h-9 min-h-[36px] min-w-[36px] items-center justify-center rounded-md !p-2 px-4 py-2.5 text-sm font-medium transition-colors hover:bg-[#f9fafb]"
                         >
                           <TrashIcon className="h-4 w-4" />

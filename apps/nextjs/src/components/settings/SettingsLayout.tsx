@@ -24,7 +24,7 @@ export default function SettingsLayout({ children }: Props) {
       <Sidebar />
       {session ? (
         <div
-          className={`grow p-8 pt-[26px] transition-[margin] duration-150 ease-in-out ${
+          className={`grow p-8 pt-[26px] transition-[margin-left] duration-150 ease-in-out ${
             sidebarOpen ? "ml-[220px]" : ""
           }`}
         >
@@ -38,7 +38,7 @@ export default function SettingsLayout({ children }: Props) {
         </div>
       ) : (
         <div
-          className={`mt-8 flex w-full items-center justify-center transition-[margin] duration-150 ease-in-out ${
+          className={`mt-8 flex w-full items-center justify-center transition-[margin-left] duration-150 ease-in-out ${
             sidebarOpen ? "ml-[220px]" : ""
           }`}
         >

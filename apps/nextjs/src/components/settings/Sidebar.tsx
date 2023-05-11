@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { CommandLineIcon, CreditCardIcon } from "@heroicons/react/24/outline";
 import { Bars3Icon } from "@heroicons/react/24/solid";
 import { useAtom } from "jotai";
@@ -11,6 +12,7 @@ import defaultProfileIcon from "~/assets/default profile icon.jpg";
 export default function Sidebar() {
   const [open, setOpen] = useAtom(sidebarOpenAtom);
   const { data: session } = useSession();
+  const router = useRouter();
 
   const navigation = [
     {
@@ -88,7 +90,11 @@ export default function Sidebar() {
               <div className="ml-4">
                 {links.map(({ link, name }) => (
                   <Link key={link} href={link}>
-                    <div className="my-1 rounded px-2 py-1 hover:bg-[#f3f4f6]">
+                    <div
+                      className={`my-1 rounded px-2 py-1 hover:bg-[#f3f4f6] ${
+                        router.pathname === link ? "bg-[#e5e7eb]" : ""
+                      }`}
+                    >
                       <span>{name}</span>
                     </div>
                   </Link>

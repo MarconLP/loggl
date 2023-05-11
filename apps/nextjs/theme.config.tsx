@@ -8,8 +8,7 @@ const config: DocsThemeConfig = {
   project: {
     link: "https://github.com/MarconLP/loggl",
   },
-  docsRepositoryBase:
-    "https://github.com/MarconLP/loggl/tree/main/apps/nextjs/src/pages/docs",
+  docsRepositoryBase: "https://github.com/MarconLP/loggl/tree/main/apps/nextjs",
   useNextSeoProps() {
     const { asPath } = useRouter();
     if (asPath !== "/") {

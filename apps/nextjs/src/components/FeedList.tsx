@@ -60,7 +60,7 @@ export default function FeedList({ notifications, fetchNextPage }: Props) {
       ) : null}
 
       {projects && projects?.length <= 0 ? (
-        <NewProjectDialog />
+        <NewProjectDialog emptyState={true} />
       ) : (
         notifications.length === 0 && (
           <div className="flex h-full flex-col items-center justify-center">

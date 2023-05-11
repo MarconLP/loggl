@@ -57,7 +57,7 @@ export default function Sidebar() {
           </Link>
         </div>
         <div className="mt-2">
-          <div className="flex h-6 cursor-pointer items-center rounded-md px-2 transition-colors hover:bg-[#f1f3f9]">
+          <div className="flex h-6 cursor-pointer items-center justify-between rounded-md px-2 transition-colors hover:bg-[#f1f3f9]">
             <span className="text-xs font-medium text-[#6b6f76]">
               Your Projects
             </span>

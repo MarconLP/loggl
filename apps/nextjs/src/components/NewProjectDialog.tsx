@@ -5,7 +5,7 @@ import { InboxIcon } from "@heroicons/react/24/solid";
 import { api } from "~/utils/api";
 
 interface Props {
-  emptyState: boolean;
+  emptyState?: boolean;
 }
 
 export default function NewProjectDialog({ emptyState = false }: Props) {

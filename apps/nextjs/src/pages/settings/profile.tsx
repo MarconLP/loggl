@@ -1,14 +1,25 @@
 import Image from "next/image";
 import { TrashIcon } from "@heroicons/react/24/outline";
-import { useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
+import LoadingSpinner from "~/components/LoadingSpinner";
 import Sidebar from "~/components/settings/Sidebar";
 import defaultProfileIcon from "~/assets/default profile icon.jpg";
 
 export default function ProfileSettingsPage() {
-  const { data: session } = useSession();
+  const { data: session } = useSession({
+    required: true,
+    onUnauthenticated() {
+      void signIn();
+    },
+  });
 
-  if (!session) return <span>please go log in</span>;
+  if (!session)
+    return (
+      <div className="mt-8 flex w-full items-center justify-center">
+        <LoadingSpinner />
+      </div>
+    );
   return (
     <div className="flex h-screen flex-row text-sm">
       <Sidebar />

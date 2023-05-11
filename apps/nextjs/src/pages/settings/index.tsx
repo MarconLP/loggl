@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 
+import LoadingSpinner from "~/components/LoadingSpinner";
+
 export default function Settings() {
   const router = useRouter();
 
@@ -9,8 +11,8 @@ export default function Settings() {
   }, [router]);
 
   return (
-    <div>
-      <p>This page will redirect to /settings/profile.</p>
+    <div className="mt-8 flex w-full items-center justify-center">
+      <LoadingSpinner />
     </div>
   );
 }

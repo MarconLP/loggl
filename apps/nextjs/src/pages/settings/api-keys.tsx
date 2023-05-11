@@ -1,12 +1,26 @@
 import { LinkIcon, PlusIcon } from "@heroicons/react/24/solid";
-import { useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
+import { api } from "~/utils/api";
+import LoadingSpinner from "~/components/LoadingSpinner";
+import NewApiKeyMenu from "~/components/settings/NewApiKeyMenu";
 import Sidebar from "~/components/settings/Sidebar";
 
 export default function ApiKeysSettingsPage() {
-  const { data: session } = useSession();
+  const { data: apiKeys } = api.account.getApiKeys.useMutation();
+  const { data: session } = useSession({
+    required: true,
+    onUnauthenticated() {
+      void signIn();
+    },
+  });
 
-  if (!session) return <span>please go log in</span>;
+  if (!session)
+    return (
+      <div className="mt-8 flex w-full items-center justify-center">
+        <LoadingSpinner />
+      </div>
+    );
   return (
     <div className="flex h-screen flex-row text-sm">
       <Sidebar />
@@ -31,10 +45,7 @@ export default function ApiKeysSettingsPage() {
               <div className="text-default mb-8 mt-3 text-center text-sm font-normal leading-6">
                 API keys allow other apps to communicate with Loggl.net
               </div>
-              <button className="hover:bg-muted hover:border-emphasis focus-visible:bg-subtle focus-visible:ring-empthasis relative inline-flex h-9 items-center rounded-md border px-4 py-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2">
-                <PlusIcon className="mr-1 h-4 w-4 stroke-[1.5px]" />
-                New API key
-              </button>
+              <NewApiKeyMenu />
             </div>
           </div>
         </div>

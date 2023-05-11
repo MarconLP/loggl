@@ -1,5 +1,7 @@
 {
   "index": "Loggl Docs",
   "quick-start": "Quick Start",
-  "integrations": "Integrations"
+  "integrations": {
+    "display": "hidden"
+  }
 }

@@ -51,7 +51,7 @@ export default function Sidebar() {
   ];
 
   return (
-    <div className="h-full w-[220px] border-r border-[#E7E9EB] bg-[#f9fafb] p-6">
+    <div className="h-full w-[220px] shrink-0 border-r border-[#E7E9EB] bg-[#f9fafb] p-6">
       <Link
         href="/dashboard/feed"
         className="mb-6 flex cursor-pointer items-center rounded px-4 py-1 hover:bg-[#f3f4f6]"

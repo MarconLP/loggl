@@ -1,29 +1,16 @@
 import Image from "next/image";
 import { TrashIcon } from "@heroicons/react/24/outline";
-import { signIn, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
-import LoadingSpinner from "~/components/LoadingSpinner";
-import Sidebar from "~/components/settings/Sidebar";
+import SettingsLayout from "~/components/settings/SettingsLayout";
 import defaultProfileIcon from "~/assets/default profile icon.jpg";
 
 export default function ProfileSettingsPage() {
-  const { data: session } = useSession({
-    required: true,
-    onUnauthenticated() {
-      void signIn();
-    },
-  });
+  const { data: session } = useSession();
 
-  if (!session)
-    return (
-      <div className="mt-8 flex w-full items-center justify-center">
-        <LoadingSpinner />
-      </div>
-    );
   return (
-    <div className="flex h-screen flex-row text-sm">
-      <Sidebar />
-      <div className="grow p-8">
+    <SettingsLayout>
+      <>
         <div className="mt-16 flex flex-col border-b border-[#E7E9EB] pb-8">
           <span className="mb-1 text-xl font-bold leading-5 tracking-wide text-[#111827]">
             Profile
@@ -35,7 +22,7 @@ export default function ProfileSettingsPage() {
         <div className="mt-8">
           <div>
             <Image
-              src={session.user.image ?? defaultProfileIcon}
+              src={session?.user.image ?? defaultProfileIcon}
               alt="profile image"
               width={64}
               height={64}
@@ -46,13 +33,13 @@ export default function ProfileSettingsPage() {
           <div className="mt-8 flex flex-col">
             <span className="mb-2 block text-sm font-medium">Username</span>
             <span className="inline-flex h-9 items-center rounded-md border bg-[#f9fafb] px-3 text-sm text-[#6b7280]">
-              {session.user.name}
+              {session?.user.name}
             </span>
           </div>
           <div className="mt-8 flex flex-col">
             <span className="mb-2 block text-sm font-medium">Email</span>
             <span className="inline-flex h-9 items-center rounded-md border bg-[#f9fafb] px-3 text-sm text-[#6b7280]">
-              {session.user.email}
+              {session?.user.email}
             </span>
           </div>
         </div>
@@ -63,7 +50,7 @@ export default function ProfileSettingsPage() {
             Delete account
           </button>
         </div>
-      </div>
-    </div>
+      </>
+    </SettingsLayout>
   );
 }

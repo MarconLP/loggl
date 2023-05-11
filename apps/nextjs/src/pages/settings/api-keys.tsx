@@ -1,4 +1,6 @@
-import { LinkIcon, PlusIcon } from "@heroicons/react/24/solid";
+import { TrashIcon } from "@heroicons/react/24/outline";
+import { LinkIcon } from "@heroicons/react/24/solid";
+import { CopyIcon } from "@radix-ui/react-icons";
 import { signIn, useSession } from "next-auth/react";
 
 import { api } from "~/utils/api";
@@ -7,7 +9,7 @@ import NewApiKeyMenu from "~/components/settings/NewApiKeyMenu";
 import Sidebar from "~/components/settings/Sidebar";
 
 export default function ApiKeysSettingsPage() {
-  const { data: apiKeys } = api.account.getApiKeys.useMutation();
+  const { data: apiKeys } = api.account.getApiKeys.useQuery();
   const { data: session } = useSession({
     required: true,
     onUnauthenticated() {
@@ -15,7 +17,7 @@ export default function ApiKeysSettingsPage() {
     },
   });
 
-  if (!session)
+  if (!session || !apiKeys)
     return (
       <div className="mt-8 flex w-full items-center justify-center">
         <LoadingSpinner />
@@ -34,20 +36,48 @@ export default function ApiKeysSettingsPage() {
           </span>
         </div>
         <div className="mt-8">
-          <div className="min-h-80 border-subtle flex w-full flex-col items-center justify-center rounded-md border border-dashed p-7 lg:p-20">
-            <div className="flex h-[72px] w-[72px] items-center justify-center rounded-full bg-[#e5e7eb] ">
-              <LinkIcon className="inline-block h-10 w-10 stroke-[1.3px]" />
+          {apiKeys.length === 0 ? (
+            <div className="min-h-80 border-subtle flex w-full flex-col items-center justify-center rounded-md border border-dashed p-7 lg:p-20">
+              <div className="flex h-[72px] w-[72px] items-center justify-center rounded-full bg-[#e5e7eb] ">
+                <LinkIcon className="inline-block h-10 w-10 stroke-[1.3px]" />
+              </div>
+              <div className="flex max-w-[420px] flex-col items-center">
+                <h2 className="text-semibold font-cal text-emphasis mt-6 text-center text-xl">
+                  Create your first API key
+                </h2>
+                <div className="text-default mb-8 mt-3 text-center text-sm font-normal leading-6">
+                  API keys allow other apps to communicate with Loggl.net
+                </div>
+                <NewApiKeyMenu />
+              </div>
             </div>
-            <div className="flex max-w-[420px] flex-col items-center">
-              <h2 className="text-semibold font-cal text-emphasis mt-6 text-center text-xl">
-                Create your first API key
-              </h2>
-              <div className="text-default mb-8 mt-3 text-center text-sm font-normal leading-6">
-                API keys allow other apps to communicate with Loggl.net
+          ) : (
+            <div className="flex flex-col items-start">
+              <div className="mb-8 mt-6 w-full">
+                {apiKeys.map(({ name }) => (
+                  <div
+                    key={name}
+                    className="rounded-md border border-t-0 first:rounded-b-none first:border-t last:rounded-t-none"
+                  >
+                    <div className="flex w-full justify-between p-4">
+                      <div className="flex items-center">
+                        <p className="font-medium">{name}</p>
+                      </div>
+                      <div className="flex flex-row">
+                        <button className="flex h-9 min-h-[36px] min-w-[36px] items-center justify-center rounded-md !p-2 px-4 py-2.5 text-sm font-medium transition-colors hover:bg-[#f9fafb]">
+                          <CopyIcon />
+                        </button>
+                        <button className="flex h-9 min-h-[36px] min-w-[36px] items-center justify-center rounded-md !p-2 px-4 py-2.5 text-sm font-medium transition-colors hover:bg-[#f9fafb]">
+                          <TrashIcon className="h-4 w-4" />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
               <NewApiKeyMenu />
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

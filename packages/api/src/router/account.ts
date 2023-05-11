@@ -3,16 +3,14 @@ import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const accountRouter = createTRPCRouter({
-  getApiKeys: protectedProcedure.mutation(
-    async ({ ctx: { session, prisma } }) => {
-      const apiKeys = await prisma.apiToken.findMany({
-        where: {
-          userId: session.user.id,
-        },
-      });
-      return apiKeys;
-    },
-  ),
+  getApiKeys: protectedProcedure.query(async ({ ctx: { session, prisma } }) => {
+    const apiKeys = await prisma.apiToken.findMany({
+      where: {
+        userId: session.user.id,
+      },
+    });
+    return apiKeys;
+  }),
   createApiKey: protectedProcedure
     .input(z.object({ name: z.string() }))
     .mutation(async ({ ctx: { session, prisma }, input }) => {

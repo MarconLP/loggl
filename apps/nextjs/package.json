@@ -19,6 +19,7 @@
     "@acme/tailwind-config": "^0.1.0",
     "@headlessui/react": "^1.7.14",
     "@heroicons/react": "^2.0.17",
+    "@radix-ui/react-icons": "^1.3.0",
     "@t3-oss/env-nextjs": "^0.2.2",
     "@tanstack/react-query": "^4.29.5",
     "@trpc/client": "^10.23.0",

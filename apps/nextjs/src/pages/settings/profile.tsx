@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { useSession } from "next-auth/react";
+import { createToast } from "vercel-toast";
 
 import SettingsLayout from "~/components/settings/SettingsLayout";
 import defaultProfileIcon from "~/assets/default profile icon.jpg";
@@ -45,7 +46,10 @@ export default function ProfileSettingsPage() {
         </div>
         <div className="mt-12 flex flex-col border-t border-[#E7E9EB] pb-8 pt-8">
           <span className="mb-2 block text-sm font-medium">Danger Zone</span>
-          <button className="hover:bg-error mt-1 inline-flex h-9 w-fit items-center rounded-md border px-4 py-2.5 text-sm font-medium transition-colors hover:border-red-100 hover:text-red-700 focus-visible:border-red-100 focus-visible:text-red-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-700">
+          <button
+            onClick={() => createToast("Not implemented yet")}
+            className="hover:bg-error mt-1 inline-flex h-9 w-fit items-center rounded-md border px-4 py-2.5 text-sm font-medium transition-colors hover:border-red-100 hover:text-red-700 focus-visible:border-red-100 focus-visible:text-red-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-700"
+          >
             <TrashIcon className="mr-2 h-4 w-4" />
             Delete account
           </button>

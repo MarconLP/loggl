@@ -1,3 +1,5 @@
+import { createToast } from "vercel-toast";
+
 import SettingsLayout from "~/components/settings/SettingsLayout";
 
 export default function BillingSettingsPage() {
@@ -23,7 +25,10 @@ export default function BillingSettingsPage() {
             </span>
           </div>
           <div>
-            <button className="rounded-md bg-[#292929] px-4 py-2 text-white">
+            <button
+              onClick={() => createToast("Not implemented yet")}
+              className="rounded-md bg-[#292929] px-4 py-2 text-white"
+            >
               Billing portal
             </button>
           </div>

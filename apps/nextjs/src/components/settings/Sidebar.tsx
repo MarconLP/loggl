@@ -1,11 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import { CommandLineIcon, CreditCardIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon } from "@heroicons/react/24/solid";
+import { useAtom } from "jotai";
 import { useSession } from "next-auth/react";
 
+import { sidebarOpenAtom } from "~/utils/atoms";
 import defaultProfileIcon from "~/assets/default profile icon.jpg";
 
 export default function Sidebar() {
+  const [open, setOpen] = useAtom(sidebarOpenAtom);
   const { data: session } = useSession();
 
   const navigation = [
@@ -51,16 +55,28 @@ export default function Sidebar() {
   ];
 
   return (
-    <div className="h-full w-[220px] shrink-0 border-r border-[#E7E9EB] bg-[#f9fafb] p-6">
-      <Link
-        href="/dashboard/feed"
-        className="mb-6 flex cursor-pointer items-center rounded px-4 py-1 hover:bg-[#f3f4f6]"
-      >
-        <span className="mr-2" aria-hidden="true">
-          &larr;
-        </span>{" "}
-        Back
-      </Link>
+    <div
+      className={`absolute h-full w-full shrink-0 border-r border-[#E7E9EB] bg-[#f9fafb] p-6 transition-all sm:w-[220px] ${
+        open ? "" : "-translate-x-full"
+      }`}
+    >
+      <div className="mb-6 flex flex-row items-center justify-between">
+        <Link
+          href="/dashboard/feed"
+          className="flex cursor-pointer items-center rounded px-4 py-1 hover:bg-[#f3f4f6]"
+        >
+          <span className="mr-2" aria-hidden="true">
+            &larr;
+          </span>{" "}
+          Back
+        </Link>
+        <div
+          className="cursor-pointer p-1 sm:hidden"
+          onClick={() => setOpen(!open)}
+        >
+          <Bars3Icon className="h-4 w-4" />
+        </div>
+      </div>
       <div>
         <div className="flex flex-col">
           {navigation.map(({ icon, name, links }) => (

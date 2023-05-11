@@ -4,7 +4,11 @@ import { InboxIcon } from "@heroicons/react/24/solid";
 
 import { api } from "~/utils/api";
 
-export default function NewProjectDialog() {
+interface Props {
+  emptyState: boolean;
+}
+
+export default function NewProjectDialog({ emptyState = false }: Props) {
   const [open, setOpen] = useState<boolean>(false);
   const [name, setName] = useState<string>("");
   const utils = api.useContext();
@@ -27,18 +31,27 @@ export default function NewProjectDialog() {
 
   return (
     <>
-      <div
-        className="flex h-full flex-col items-center justify-center"
-        onClick={() => setOpen(true)}
-      >
-        <InboxIcon className="h-16 w-16" />
-        <span className="text-palette-900 mt-2 text-base font-medium leading-6 md:text-base">
-          No projects yet
-        </span>
-        <button className="mt-6 inline-flex items-center rounded-md border border-transparent bg-[#171717] px-4 py-2 text-sm font-medium text-white hover:bg-[#404040] focus:outline-none">
-          + Create Project
-        </button>
-      </div>
+      {emptyState ? (
+        <div
+          className="flex h-full flex-col items-center justify-center"
+          onClick={() => setOpen(true)}
+        >
+          <InboxIcon className="h-16 w-16" />
+          <span className="text-palette-900 mt-2 text-base font-medium leading-6 md:text-base">
+            No projects yet
+          </span>
+          <button className="mt-6 inline-flex items-center rounded-md border border-transparent bg-[#171717] px-4 py-2 text-sm font-medium text-white hover:bg-[#404040] focus:outline-none">
+            + Create Project
+          </button>
+        </div>
+      ) : (
+        <div
+          onClick={() => setOpen(true)}
+          className="flex h-6 w-6 items-center justify-center"
+        >
+          <span>+</span>
+        </div>
+      )}
       <Transition appear show={open} as={Fragment}>
         <Dialog
           as="div"

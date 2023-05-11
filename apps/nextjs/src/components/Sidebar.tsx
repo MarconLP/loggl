@@ -9,6 +9,7 @@ import { sidebarOpenAtom } from "~/utils/atoms";
 import AccountMenu from "~/components/AccountMenu";
 import ChannelMoreMenu from "~/components/ChannelMoreMenu";
 import LoadingSpinner from "~/components/LoadingSpinner";
+import NewProjectDialog from "~/components/NewProjectDialog";
 import ProjectMoreMenu from "~/components/ProjectMoreMenu";
 
 export default function Sidebar() {
@@ -60,6 +61,7 @@ export default function Sidebar() {
             <span className="text-xs font-medium text-[#6b6f76]">
               Your Projects
             </span>
+            <NewProjectDialog />
           </div>
           <div className="mt-1 flex flex-col">
             {session && projects ? (

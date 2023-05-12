@@ -1,27 +1,88 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { type NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { Tab } from "@headlessui/react";
+import { CheckIcon } from "@heroicons/react/20/solid";
+import { CopyIcon } from "@radix-ui/react-icons";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import HTTPSnippet from "httpsnippet";
 import { signIn, useSession } from "next-auth/react";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 
 import CTA from "~/components/landing/CTA";
 import Footer from "~/components/landing/Footer";
 import Header from "~/components/landing/Header";
+import syntaxHighlightingStyle from "~/styles/syntaxHighlightingStyle";
+import mobile_view from "~/assets/mobile_view.png";
 
 dayjs.extend(relativeTime);
 
 const Home: NextPage = () => {
   const session = useSession();
   const router = useRouter();
+  const [copied, setCopied] = useState<boolean>(false);
 
   useEffect(() => {
     if (session.status === "authenticated") {
       void router.push("/dashboard/feed");
     }
   }, [session, router]);
+
+  const handleCopy = () => {
+    setCopied(true);
+
+    setTimeout(() => {
+      setCopied(false);
+    }, 5000);
+  };
+
+  const snippet = new HTTPSnippet({
+    method: "POST",
+    url: "https://loggl.net/api/v1/log",
+    httpVersion: "HTTP/1.1",
+    cookies: [],
+    headers: [
+      {
+        name: "Authorization",
+        value: "Bearer <TOKEN>",
+      },
+      {
+        name: "Content-Type",
+        value: "application/json",
+      },
+    ],
+    queryString: [],
+    headersSize: -1,
+    bodySize: -1,
+    postData: {
+      mimeType: "application/json",
+      text: '{\n    "project": "my-website",\n    "channel": "user-register",\n    "event": "User Registered",\n    "description": "email: user@example.com",\n    "icon": "🔥",\n    "notify": true\n}',
+    },
+  });
+
+  console.log(snippet.convert("shell", "curl", { indent: "\t" }));
+
+  const [categories] = useState([
+    {
+      tab: "cURL",
+      code: snippet.convert("shell", "curl", { indent: "\t" }),
+    },
+    {
+      tab: "Node",
+      code: snippet.convert("node", "axios", { indent: "\t" }),
+    },
+    {
+      tab: "JavaScript",
+      code: snippet.convert("javascript", "fetch", { indent: "\t" }),
+    },
+    {
+      tab: "Python",
+      code: snippet.convert("python", "requests", { indent: "\t" }),
+    },
+  ]);
 
   return (
     <>
@@ -205,22 +266,62 @@ const Home: NextPage = () => {
               an http request.
             </span>
           </div>
-          <div>
-            <span>api playground - with different sending types</span>
+
+          <div className="mt-6 flex flex-col items-center justify-center">
+            <div className="w-full max-w-xl overflow-hidden rounded-lg text-xs text-white">
+              <Tab.Group>
+                <Tab.List className="flex items-center justify-between bg-black px-2 font-medium">
+                  <div>
+                    {categories.map(({ tab }) => (
+                      <Tab
+                        key={tab}
+                        className={({ selected }) =>
+                          `px-1 py-2.5 outline-none ${
+                            selected ? "text-white" : "text-[#9ca3af]"
+                          }`
+                        }
+                      >
+                        <span className="rounded-md px-2 py-1 hover:bg-[#37415199]">
+                          {tab}
+                        </span>
+                      </Tab>
+                    ))}
+                  </div>
+                  <div
+                    onClick={handleCopy}
+                    className="h-[15px] w-[15px] cursor-pointer"
+                  >
+                    {!copied ? <CopyIcon /> : <CheckIcon />}
+                  </div>
+                </Tab.List>
+                <Tab.Panels className="bg-[#0f1116] p-1">
+                  {categories.map(({ code }, idx) => (
+                    <Tab.Panel key={idx} className="whitespace-pre-wrap">
+                      <SyntaxHighlighter
+                        language="javascript"
+                        style={syntaxHighlightingStyle}
+                      >
+                        {code ? code : ""}
+                      </SyntaxHighlighter>
+                    </Tab.Panel>
+                  ))}
+                </Tab.Panels>
+              </Tab.Group>
+            </div>
           </div>
         </div>
 
-        <div className="mx-auto flex max-w-7xl flex-row justify-center py-32">
-          <div className="flex flex-col items-center justify-center text-center">
-            <span className="text-4xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+        <div className="mx-auto flex max-w-7xl flex-col justify-center gap-y-16 py-16 sm:flex-row sm:py-32">
+          <div className="flex flex-1 flex-col items-center justify-center text-center">
+            <span className="text-2xl font-bold tracking-tight text-gray-900">
               Push Notifications
             </span>
             <span className="mt-4 max-w-[75%] text-[#6c6684]">
               Get push notifications directly onto your phone.
             </span>
           </div>
-          <div className="flex flex-col items-center justify-center text-center">
-            <span className="text-4xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+          <div className="flex flex-1 flex-col items-center justify-center text-center">
+            <span className="text-2xl font-bold tracking-tight text-gray-900">
               Self-hosting
             </span>
             <span className="mt-4 max-w-[75%] text-[#6c6684]">
@@ -230,9 +331,9 @@ const Home: NextPage = () => {
           </div>
         </div>
 
-        <div className="mx-auto max-w-7xl py-32">
+        <div className="mx-auto max-w-7xl py-16">
           <div className="flex flex-col items-center justify-center text-center">
-            <span className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+            <span className="text-4xl font-bold tracking-tight text-gray-900">
               Cross Platform
             </span>
             <span className="mt-4 max-w-[75%] text-[#6c6684]">
@@ -242,13 +343,20 @@ const Home: NextPage = () => {
           </div>
         </div>
 
+        <div className="flex w-full items-center justify-center">
+          <Image
+            src={mobile_view}
+            className="max-h-[400px] object-contain"
+            alt="mobile product view"
+            unoptimized
+          />
+        </div>
+
         <div className="flex w-full items-center justify-center border-y border-[#eaeaea] bg-[#fafafa]">
           <div className="flex max-w-7xl flex-1 flex-col items-center justify-center py-4 lg:h-[140px] lg:flex-row">
             {[
               { stat: "events tracked", value: "249k+" },
               { stat: "github stars", value: "0" },
-              { stat: "statistic", value: "x" },
-              { stat: "uptime guarantee", value: "99.9%" },
             ].map(({ stat, value }) => (
               <div
                 key={stat}

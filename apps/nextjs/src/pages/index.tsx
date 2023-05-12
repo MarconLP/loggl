@@ -3,13 +3,15 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { CheckCircleIcon } from "@heroicons/react/24/outline";
-import { ShareIcon } from "@heroicons/react/24/solid";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 import { signIn, useSession } from "next-auth/react";
 
 import CTA from "~/components/landing/CTA";
 import Footer from "~/components/landing/Footer";
 import Header from "~/components/landing/Header";
+
+dayjs.extend(relativeTime);
 
 const Home: NextPage = () => {
   const session = useSession();
@@ -71,7 +73,61 @@ const Home: NextPage = () => {
             </div>
           </div>
 
-          {/* animated notification widget */}
+          <div className="ml-auto h-[500px] w-[500px] overflow-hidden rounded-lg bg-[linear-gradient(135deg,_rgb(247,_240,_255),_rgb(167,_138,_254))]">
+            <div>
+              {[
+                {
+                  id: 1,
+                  icon: "🔥",
+                  event: "A user registered",
+                  description: "email: user@example.com",
+                  timestamp: 1683881418207,
+                },
+                {
+                  id: 2,
+                  icon: "🔥",
+                  event: "A user registered",
+                  description: "email: user@example.com",
+                  timestamp: 1683881418207,
+                },
+                {
+                  id: 3,
+                  icon: "🔥",
+                  event: "A user registered",
+                  description: "email: user@example.com",
+                  timestamp: 1683881415207,
+                },
+                {
+                  id: 4,
+                  icon: "🔥",
+                  event: "A user registered",
+                  description: "email: user@example.com",
+                  timestamp: 1683881418207,
+                },
+              ].map(({ id, icon, description, timestamp, event }) => (
+                <div key={id} className="px-2 pt-6">
+                  <div className="mx-auto flex w-full max-w-[400px] flex-row rounded-lg border border-[#00000014] bg-white p-6 text-[#474747]">
+                    <div className="mr-4 flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border border-[#00000014] bg-[#dad1bf1a]">
+                      {icon}
+                    </div>
+                    <div className="flex grow flex-col">
+                      <div>
+                        <span className="font-bold">{event}</span>
+                      </div>
+                      <div className="flex flex-row">
+                        <span>{description}</span>
+                      </div>
+                      <div className="flex h-4 justify-end">
+                        <span className="block text-xs">
+                          {dayjs(timestamp).fromNow(true)}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
 
           <div className="mx-auto hidden max-w-7xl py-6 sm:py-6 lg:py-6">
             <div className="text-center">

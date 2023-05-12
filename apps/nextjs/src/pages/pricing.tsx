@@ -71,7 +71,7 @@ export default function Pricing() {
                 included: true,
               },
               {
-                feature: "10,000 events / month",
+                feature: "5,000 events / month",
                 included: true,
               },
               {
@@ -82,14 +82,14 @@ export default function Pricing() {
           },
           {
             name: "Pro",
-            price: { monthly: "$5", annual: "$4" },
+            price: { monthly: "$20", annual: "$16" },
             features: [
               {
                 feature: "No credit card required",
                 included: true,
               },
               {
-                feature: "20,000 events / month",
+                feature: "50,000 events / month",
                 included: true,
               },
               {

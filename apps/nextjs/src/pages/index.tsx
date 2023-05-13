@@ -285,7 +285,7 @@ const Home: NextPage = () => {
                   </div>
                   <div
                     onClick={handleCopy}
-                    className="h-[15px] w-[15px] cursor-pointer"
+                    className="hidden h-[15px] w-[15px] cursor-pointer"
                   >
                     {!copied ? <CopyIcon /> : <CheckIcon />}
                   </div>

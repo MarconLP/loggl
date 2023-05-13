@@ -263,7 +263,7 @@ const Home: NextPage = () => {
             </span>
           </div>
 
-          <div className="mt-6 flex flex-col items-center justify-center">
+          <div className="mt-6 flex flex-col items-center justify-center px-6">
             <div className="w-full max-w-xl overflow-hidden rounded-lg text-xs text-white">
               <Tab.Group>
                 <Tab.List className="flex items-center justify-between bg-black px-2 font-medium">

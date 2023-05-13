@@ -21,7 +21,7 @@ Your API requests are authenticated using API keys. Any request that doesn't inc
 
 Now you can publish your first event to Loggl. To do so, make a POST request to the log endpoint. Once you have published your event, it will show up in the Loggl App in real-time, and you will receive a push notification if you have set the notify flag to true.
 
-<Tabs items={['cURL', 'NodeJS']}>
+<Tabs items={['cURL', 'Node', 'JavaScript', 'Python']}>
   <Tab>
     ```js copy
     curl --location --request POST 'https://loggl.net/api/v1/log' \
@@ -39,20 +39,65 @@ Now you can publish your first event to Loggl. To do so, make a POST request to 
   </Tab>
     <Tab>
       ```js copy
-      import { Loggl } from 'loggl';
+      var axios = require("axios").default;
 
-      const loggl = new Loggl({
-        token: '<TOKEN>',
-        project: '<PROJECT>',
-    })
+      var options = {
+        method: 'POST',
+        url: 'https://loggl.net/api/v1/log',
+        headers: {Authorization: 'Bearer <TOKEN>', 'Content-Type': 'application/json'},
+        data: {
+          project: 'my-website',
+          channel: 'user-register',
+          event: 'User Registered',
+          description: 'email: user@example.com',
+          icon: '🔥',
+          notify: true
+        }
+    };
 
-      await loggl.publish({
-        channel: "user-register",
-        event: "User Registered",
-        description: "email: user@example.com",
-        icon: "🔥",
-        notify: true
-      })
+      axios.request(options).then(function (response) {
+        console.log(response.data);
+    }).catch(function (error) {
+        console.error(error);
+    });
+      ```
+  </Tab>
+    <Tab>
+      ```js copy
+      const options = {
+        method: 'POST',
+        headers: {Authorization: 'Bearer <TOKEN>', 'Content-Type': 'application/json'},
+        body: '{"project":"my-website","channel":"user-register","event":"User Registered","description":"email: user@example.com","icon":"🔥","notify":true}'
+      };
+
+      fetch('https://loggl.net/api/v1/log', options)
+        .then(response => response.json())
+        .then(response => console.log(response))
+        .catch(err => console.error(err));
+      ```
+  </Tab>
+    <Tab>
+      ```python copy
+      import requests
+
+      url = "https://loggl.net/api/v1/log"
+
+      payload = {
+        "project": "my-website",
+        "channel": "user-register",
+        "event": "User Registered",
+        "description": "email: user@example.com",
+        "icon": "🔥",
+        "notify": True
+    }
+      headers = {
+        "Authorization": "Bearer <TOKEN>",
+        "Content-Type": "application/json"
+    }
+
+      response = requests.request("POST", url, json=payload, headers=headers)
+
+      print(response.text)
       ```
   </Tab>
 </Tabs>

@@ -1,5 +1,6 @@
 import WithPWA from 'next-pwa';
 import Nextra from 'nextra';
+import { env } from "./src/env.mjs";
 /**
  * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
  * This is especially useful for Docker builds and Linting.
@@ -26,6 +27,14 @@ const config = {
   /** We already do linting and typechecking as separate tasks in CI */
   eslint: { ignoreDuringBuilds: !!process.env.CI },
   typescript: { ignoreBuildErrors: !!process.env.CI },
+  async rewrites() {
+    return [
+      {
+        source: `/${env.NEXT_PUBLIC_POSTHOG_PROXY_SECRET}/:path*`,
+        destination: `${env.NEXT_PUBLIC_POSTHOG_HOST}/:path*`,
+      },
+    ];
+  },
 };
 
 export default withPWA(withNextra(config));

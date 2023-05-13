@@ -9,9 +9,11 @@ import { SessionProvider } from "next-auth/react";
 import { api } from "~/utils/api";
 import { firebaseCloudMessaging } from "~/utils/firebase";
 import "vercel-toast/css";
+import posthog from "posthog-js";
 import { createToast } from "vercel-toast";
 
 import CrispChat from "~/components/CrispChat";
+import { env } from "~/env.mjs";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -53,6 +55,17 @@ const MyApp: AppType<{ session: Session | null }> = ({
       createToast(message?.notification?.title ?? "A new event", {
         timeout: 3000,
       });
+    });
+  }
+
+  // Check that PostHog is client-side (used to handle Next.js SSR)
+  if (typeof window !== "undefined" && !!env.NEXT_PUBLIC_POSTHOG_KEY) {
+    posthog.init(env.NEXT_PUBLIC_POSTHOG_KEY, {
+      api_host: "/" + env.NEXT_PUBLIC_POSTHOG_PROXY_SECRET,
+      // Enable debug mode in development
+      loaded: (posthog) => {
+        if (process.env.NODE_ENV === "development") posthog.debug();
+      },
     });
   }
 

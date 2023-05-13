@@ -34,33 +34,30 @@ const config: DocsThemeConfig = {
         <meta httpEquiv="Content-Language" content="en" />
         <meta
           name="description"
-          content="Make beautiful websites with Next.js & MDX."
+          content="Loggl makes it easy to collect and store the events that matter to you and notify you when they happen! For example, you can track user actions from your SaaS project, Customer actions from your e-commerce store, or player actions from your Minecraft server."
         />
         <meta
           name="og:description"
-          content="Make beautiful websites with Next.js & MDX."
+          content="Loggl makes it easy to collect and store the events that matter to you and notify you when they happen! For example, you can track user actions from your SaaS project, Customer actions from your e-commerce store, or player actions from your Minecraft server."
         />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:image" content={socialCard} />
-        <meta name="twitter:site:domain" content="nextra.site" />
-        <meta name="twitter:url" content="https://nextra.site" />
-        <meta
-          name="og:title"
-          content={title ? title + " – Nextra" : "Nextra"}
-        />
+        <meta name="twitter:site:domain" content="loggl.net" />
+        <meta name="twitter:url" content="https://loggl.net" />
+        <meta name="og:title" content={title ? title + " – Loggl" : "Loggl"} />
         <meta name="og:image" content={socialCard} />
-        <meta name="apple-mobile-web-app-title" content="Nextra" />
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-        <link rel="icon" href="/favicon.png" type="image/png" />
+        <meta name="apple-mobile-web-app-title" content="Loggl" />
+        <link rel="icon" href="/favicon.ico" type="image/svg+xml" />
+        <link rel="icon" href="/favicon.ico" type="image/png" />
         <link
           rel="icon"
-          href="/favicon-dark.svg"
+          href="/favicon.ico"
           type="image/svg+xml"
           media="(prefers-color-scheme: dark)"
         />
         <link
           rel="icon"
-          href="/favicon-dark.png"
+          href="/favicon.ico"
           type="image/png"
           media="(prefers-color-scheme: dark)"
         />

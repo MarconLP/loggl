@@ -86,11 +86,6 @@ const Home: NextPage = () => {
     <>
       <Head>
         <title>Loggl | Real-time event monitoring</title>
-        <meta
-          name="description"
-          content="Share high-quality videos asynchronously and collaborate on your own schedule"
-        />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="bg-white">
         <Header />

@@ -19,11 +19,6 @@ export default function Pricing() {
     <>
       <Head>
         <title>Loggl | Pricing</title>
-        <meta
-          name="description"
-          content="Share high-quality videos asynchronously and collaborate on your own schedule"
-        />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
       <div className="my-20 flex h-40 flex-col items-center justify-center sm:mx-10 lg:mx-20">

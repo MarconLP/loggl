@@ -63,8 +63,6 @@ const Home: NextPage = () => {
     },
   });
 
-  console.log(snippet.convert("shell", "curl", { indent: "\t" }));
-
   const [categories] = useState([
     {
       tab: "cURL",
@@ -311,7 +309,7 @@ const Home: NextPage = () => {
           </div>
         </div>
 
-        <div className="mx-auto flex max-w-7xl flex-col justify-center gap-y-16 py-16 sm:flex-row sm:py-32">
+        <div className="mx-auto flex max-w-7xl flex-col justify-center gap-y-16 py-8 sm:flex-row sm:py-16">
           <div className="flex flex-1 flex-col items-center justify-center text-center">
             <span className="text-2xl font-bold tracking-tight text-gray-900">
               Push Notifications
@@ -368,20 +366,6 @@ const Home: NextPage = () => {
                 </span>
               </div>
             ))}
-          </div>
-        </div>
-
-        <div className="flex items-center justify-center py-32">
-          <div className="flex max-w-7xl flex-1 flex-col items-center justify-center">
-            <span className="text-primary text-[32px] font-semibold leading-[1] tracking-tight lg:text-[40px] xl:text-[48px]">
-              Trusted by the best
-            </span>
-            <div className="mt-4">
-              <span className="mx-2">testimonial</span>
-              <span className="mx-2">testimonial</span>
-              <span className="mx-2">testimonial</span>
-              <span className="mx-2">testimonial</span>
-            </div>
           </div>
         </div>
 

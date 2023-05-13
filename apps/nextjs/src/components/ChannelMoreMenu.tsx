@@ -46,8 +46,8 @@ export default function ChannelMoreMenu({ channelId }: Props) {
 
   return (
     <Menu as="div" className="relative inline-block text-left">
-      <div>
-        <Menu.Button className="flex h-6 w-6 items-center justify-center opacity-0 group-hover/channel:opacity-100">
+      <div onClick={(e) => e.stopPropagation()}>
+        <Menu.Button className="flex h-6 w-6 items-center justify-center opacity-100 group-hover/channel:opacity-100 sm:opacity-0">
           <EllipsisHorizontalIcon className="h-4 w-4" />
         </Menu.Button>
       </div>

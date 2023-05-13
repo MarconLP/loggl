@@ -45,7 +45,7 @@ export default function ProjectMoreMenu({ projectId }: Props) {
 
   return (
     <Menu as="div" className="relative inline-block text-left">
-      <div>
+      <div onClick={(e) => e.stopPropagation()}>
         <Menu.Button className="flex h-6 w-6 items-center justify-center">
           <EllipsisHorizontalIcon className="h-4 w-4" />
         </Menu.Button>

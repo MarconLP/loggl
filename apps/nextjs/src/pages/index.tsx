@@ -137,31 +137,31 @@ const Home: NextPage = () => {
               {[
                 {
                   id: 1,
-                  icon: "🔥",
-                  event: "A user registered",
+                  icon: "👤",
+                  event: "User Registered",
                   description: "email: user@example.com",
-                  timestamp: 1683881418207,
+                  timestamp: "today at 9:24 PM",
                 },
                 {
                   id: 2,
-                  icon: "🔥",
-                  event: "A user registered",
+                  icon: "🤑",
+                  event: "Upgraded to Pro",
                   description: "email: user@example.com",
-                  timestamp: 1683881418207,
+                  timestamp: "today at 9:28 PM",
                 },
                 {
                   id: 3,
                   icon: "🔥",
-                  event: "A user registered",
+                  event: "User Joined Waitlist",
                   description: "email: user@example.com",
-                  timestamp: 1683881415207,
+                  timestamp: "today at 9:46 PM",
                 },
                 {
                   id: 4,
-                  icon: "🔥",
-                  event: "A user registered",
+                  icon: "📬",
+                  event: "Feedback Submitted",
                   description: "email: user@example.com",
-                  timestamp: 1683881418207,
+                  timestamp: "today at 10:35 PM",
                 },
               ].map(({ id, icon, description, timestamp, event }) => (
                 <div key={id} className="px-2 pt-6">
@@ -177,9 +177,7 @@ const Home: NextPage = () => {
                         <span>{description}</span>
                       </div>
                       <div className="flex h-4 justify-end">
-                        <span className="block text-xs">
-                          {dayjs(timestamp).fromNow(true)}
-                        </span>
+                        <span className="block text-xs">{timestamp}</span>
                       </div>
                     </div>
                   </div>

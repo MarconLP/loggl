@@ -1,210 +1,109 @@
-# create-t3-turbo
+<p align="center">
+  <h3 align="center">Loggl</h3>
 
-<img width="1758" alt="turbo2" src="https://user-images.githubusercontent.com/51714798/213819392-33e50db9-3e38-4c51-9a22-03abe5e48f3d.png">
+  <p align="center">
+    The self-hostable LogSnag alternative.
+    <br />
+    <a href="https://loggl.net"><strong>Learn more »</strong></a>
+  </p>
 
-## Installation
+<p align="center">
+  <a href='https://github.com/MarconLP/loggl/stargazers'><img src='https://img.shields.io/github/stars/MarconLP/loggl'  alt='Github Stars'/></a>
+  <!--<a href="https://news.ycombinator.com/item?id=34279062"><img src="https://img.shields.io/badge/Hacker%20News-352-%23FF6600" alt="Hacker News"></a>-->
+  <a href="https://github.com/MarconLP/loggl/pulse"><img src="https://img.shields.io/github/commit-activity/m/MarconLP/loggl" alt="Commits-per-month"></a>
+  <a href="https://loggl.net"><img src="https://img.shields.io/badge/Pricing-Free-brightgreen" alt="Pricing"></a>
+  <a href="https://twitter.com/Marcon565"><img src="https://img.shields.io/twitter/follow/Marcon565?style=flat" alt='twitter'></a>
+</p>
 
-There are two ways of initializing an app using `create-t3-turbo` starter. You can either use this repository as a template or use Turbo's CLI to init your project:
-```bash
-npx create-turbo@latest -e https://github.com/t3-oss/create-t3-turbo
-```
+<p align="center">
+  <a href="https://loggl.net">Website</a> - <a href="https://github.com/MarconLP/loggl/issues">Issue</a> - <a href="https://github.com/MarconLP/loggl/issues/new">Bug report</a>
+</p>
 
-## About
+## Loggl
 
-Ever wondered how to migrate your T3 application into a monorepo? Stop right here! This is the perfect starter repo to get you running with the perfect stack!
+Loggl is an self-hostable product analytics product. Automate the collection of every event on your website or app, with no need to send data to 3rd parties. 
 
-It uses [Turborepo](https://turborepo.org/) and contains:
+## Development
 
-```
-.github
-  └─ workflows
-        └─ CI with pnpm cache setup
-.vscode
-  └─ Recommended extensions and settings for VSCode users
-apps
-  ├─ expo
-  |   ├─ Expo SDK 48
-  |   ├─ React Native using React 18
-  |   ├─ Navigation using Expo Router
-  |   ├─ Tailwind using Nativewind
-  |   └─ Typesafe API calls using tRPC
-  └─ next.js
-      ├─ Next.js 13
-      ├─ React 18
-      ├─ Tailwind CSS
-      └─ E2E Typesafe API Server & Client
-packages
- ├─ api
- |   └─ tRPC v10 router definition
- ├─ auth
-     └─ authentication using next-auth. **NOTE: Only for Next.js app, not Expo**
- └─ db
-     └─ typesafe db-calls using Prisma
-```
+### Setup
 
-## FAQ
+1. Clone the repo into a public GitHub repository (or fork https://github.com/MarconLP/loggl/fork). If you plan to distribute the code, make sure to comply with our `LICENSE.md`.
 
-### Can you include Solito?
+   ```sh
+   git clone https://github.com/MarconLP/loggl.git
+   ```
 
-No. Solito will not be included in this repo. It is a great tool if you want to share code between your Next.js and Expo app. However, the main purpose of this repo is not the integration between Next.js and Expo - it's the codesplitting of your T3 App into a monorepo, the Expo app is just a bonus example of how you can utilize the monorepo with multiple apps but can just as well be any app such as Vite, Electron, etc.
+2. Go to the project folder
 
-Integrating Solito into this repo isn't hard, and there are a few [offical templates](https://github.com/nandorojo/solito/tree/master/example-monorepos) by the creators of Solito that you can use as a reference.
+   ```sh
+   cd loggl
+   ```
 
-### What auth solution should I use instead of Next-Auth.js for Expo?
+3. Install packages with yarn
 
-I've left this kind of open for you to decide. Some options are [Clerk](https://clerk.dev), [Supabase Auth](https://supabase.com/docs/guides/auth), [Firebase Auth](https://firebase.google.com/docs/auth/) or [Auth0](https://auth0.com/docs). Note that if you're dropping the Expo app for something more "browser-like", you can still use Next-Auth.js for those. [See an example in a Plasmo Chrome Extension here](https://github.com/t3-oss/create-t3-turbo/tree/chrome/apps/chrome).
+   ```sh
+   npm i
+   ```
 
-The Clerk.dev team even made an [official template repository](https://github.com/clerkinc/t3-turbo-and-clerk) integrating Clerk.dev with this repo.
+4. Set up your .env file
+   - Duplicate `.env.example` to `.env`
+   - Use `openssl rand -base64 32` to generate a key and add it under `NEXTAUTH_SECRET` in the .env file.
+   - <details>
+     <summary>Fill in the other variables</summary>
+        <details>
+        <summary>Configure DATABASE_URL</summary>
 
-During Launch Week 7, Supabase [announced their fork](https://supabase.com/blog/launch-week-7-community-highlights#t3-turbo-x-supabase) of this repo integrating it with their newly announced auth improvements. You can check it out [here](https://github.com/supabase-community/create-t3-turbo).
+      1. Open [Railway](https://railway.app/) and click "Start a New Project", and select Provision "PostgreSQL".
+      2. Select the Postgres App and copy the `DATABASE_URL` into the `.env`.
 
-### Does this pattern leak backend code to my client applications?
+        </details>
+        <details>
+        <summary>Obtaining the Github API Credentials</summary>
 
-No, it does not. The `api` package should only be a production dependency in the Next.js application where it's served. The Expo app, and all other apps you may add in the future, should only add the `api` package as a dev dependency. This lets you have full typesafety in your client applications, while keeping your backend code safe.
+      1. Open [Github Developer Settings](https://github.com/settings/apps).
+      2. Next, go to [OAuth Apps](https://github.com/settings/developers) from the side pane. Then click the "New OAuth App" button. Make sure to set `Authorization callback URL` to `<Loggl URL>/api/auth/callback/github` replacing Loggl URL with the URI at which your application runs.
+      3. Copy the `Client ID` as `GITHUB_ID` into the `.env`.
+      4. Next, click "Generate a new client secret" and copy the `Client secret` as `GITHUB_SECRET` into the `.env`.
 
-If you need to share runtime code between the client and server, such as input validation schemas, you can create a separate `shared` package for this and import on both sides.
+        </details>
+        <details>
+        <summary>Obtaining the AWS S3 API Credentials</summary>
 
-## Quick Start
+      1. Open [B2 Cloud Storage Buckets](https://secure.backblaze.com/b2_buckets.htm).
+      2. Create a new Bucket, make sure to set the bucket to private to make sure files are not being made publicly available.
+      3. Copy the `Endpoint` as `AWS_ENDPOINT` and the Bucket name as `AWS_BUCKET_NAME` into the `.env`. Additionally you need to add the `AWS_REGION`, which is part of the endpoint and should look like this: `us-east-005`.
+      4. Next, go to [Application Keys](https://secure.backblaze.com/app_keys.htm) from the side pane. Then create a new Application Key, with full read and write access to the bucket.
+      5. Copy the `keyID` as `AWS_KEY_ID` and the `applicationKey` as `AWS_SECRET_ACCESS_KEY` into the `.env`.
 
-To get it running, follow the steps below:
+        </details>
+     </details>
 
-### Setup dependencies
+5. Run (in development mode)
 
-```diff
-# Install dependencies
-pnpm i
+   ```sh
+   npm run dev
+   ```
 
-# In packages/db/prisma update schema.prisma provider to use sqlite
-# or use your own database provider
-- provider = "postgresql"
-+ provider = "sqlite"
+[//]: # (### E2E-Testing)
 
-# Configure environment variables.
-# There is an `.env.example` in the root directory you can use for reference
-cp .env.example .env
+[//]: # (Be sure to set the environment variable `NEXTAUTH_URL` to the correct value. If you are running locally, as the documentation within `.env.example` mentions, the value should be `http://localhost:3000`.)
 
-# Push the Prisma schema to your database
-pnpm db:push
-```
+[//]: # (```sh)
 
-### Configure Expo `dev`-script
+[//]: # (# In a terminal just run:)
 
-#### Use iOS Simulator
+[//]: # (npm run test:e2e)
 
-1. Make sure you have XCode and XCommand Line Tools installed [as shown on expo docs](https://docs.expo.dev/workflow/ios-simulator/).
-   > **NOTE:** If you just installed XCode, or if you have updated it, you need to open the simulator manually once. Run `npx expo start` in the root dir, and then enter `I` to launch Expo Go. After the manual launch, you can run `pnpm dev` in the root directory.
-
-```diff
-+  "dev": "expo start --ios",
-```
-
-3. Run `pnpm dev` at the project root folder.
-
-> **TIP:** It might be easier to run each app in separate terminal windows so you get the logs from each app separately. This is also required if you want your terminals to be interactive, e.g. to access the Expo QR code. You can run `pnpm --filter expo dev` and `pnpm --filter nextjs dev` to run each app in a separate terminal window.
-
-#### For Android
-
-1. Install Android Studio tools [as shown on expo docs](https://docs.expo.dev/workflow/android-studio-emulator/).
-2. Change the `dev` script at `apps/expo/package.json` to open the Android emulator.
-
-```diff
-+  "dev": "expo start --android",
-```
-
-3. Run `pnpm dev` at the project root folder.
+[//]: # (```)
 
 ## Deployment
 
-### Next.js
+### Vercel
 
-#### Prerequisites
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FMarconLP%2Floggl&env=DATABASE_URL,NEXTAUTH_URL,NEXTAUTH_SECRET,GITHUB_ID,GITHUB_SECRET,AWS_ENDPOINT,AWS_REGION,AWS_KEY_ID,AWS_SECRET_ACCESS_KEY,AWS_BUCKET_NAME&project-name=snapify&repository-name=snapify)
 
-_We do not recommend deploying a SQLite database on serverless environments since the data wouldn't be persisted. I provisioned a quick Postgresql database on [Railway](https://railway.app), but you can of course use any other database provider. Make sure the prisma schema is updated to use the correct database._
+[//]: # (## Contributing)
+[//]: # (Please see our contributing guide at `CONTRIBUTING.md`)
 
-**Please note that the Next.js application with tRPC must be deployed in order for the Expo app to communicate with the server in a production environment.**
-
-#### Deploy to Vercel
-
-Let's deploy the Next.js application to [Vercel](https://vercel.com/). If you have ever deployed a Turborepo app there, the steps are quite straightforward. You can also read the [official Turborepo guide](https://vercel.com/docs/concepts/monorepos/turborepo) on deploying to Vercel.
-
-1. Create a new project on Vercel, select the `apps/nextjs` folder as the root directory and apply the following build settings:
-
-<img width="927" alt="Vercel deployment settings" src="https://user-images.githubusercontent.com/11340449/201974887-b6403a32-5570-4ce6-b146-c486c0dbd244.png">
-
-> The install command filters out the expo package and saves a few second (and cache size) of dependency installation. The build command makes us build the application using Turbo.
-
-2. Add your `DATABASE_URL` environment variable.
-
-3. Done! Your app should successfully deploy. Assign your domain and use that instead of `localhost` for the `url` in the Expo app so that your Expo app can communicate with your backend when you are not in development.
-
-### Expo
-
-Deploying your Expo application works slightly differently compared to Next.js on the web. Instead of "deploying" your app online, you need to submit production builds of your app to the app stores, like [Apple App Store](https://www.apple.com/app-store/) and [Google Play](https://play.google.com/store/apps). You can read the full [Distributing your app](https://docs.expo.dev/distribution/introduction/), including best practices, in the Expo docs.
-
-1. Make sure to modify the `getBaseUrl` function to point to your backend's production URL:
-
-https://github.com/t3-oss/create-t3-turbo/blob/656965aff7db271e5e080242c4a3ce4dad5d25f8/apps/expo/src/utils/api.tsx#L20-L37
-
-2. Let's start by setting up [EAS Build](https://docs.expo.dev/build/introduction/), which is short for Expo Application Services. The build service helps you create builds of your app, without requiring a full native development setup. The commands below are a summary of [Creating your first build](https://docs.expo.dev/build/setup/).
-
-   ```bash
-   // Install the EAS CLI
-   $ pnpm add -g eas-cli
-
-   // Log in with your Expo account
-   $ eas login
-
-   // Configure your Expo app
-   $ cd apps/expo
-   $ eas build:configure
-   ```
-
-3. After the initial setup, you can create your first build. You can build for Android and iOS platforms and use different [**eas.json** build profiles](https://docs.expo.dev/build-reference/eas-json/) to create production builds or development, or test builds. Let's make a production build for iOS.
-
-   ```
-   $ eas build --platform ios --profile production
-   ```
-
-   > If you don't specify the `--profile` flag, EAS uses the `production` profile by default.
-
-4. Now that you have your first production build, you can submit this to the stores. [EAS Submit](https://docs.expo.dev/submit/introduction/) can help you send the build to the stores.
-
-   ```
-   $ eas submit --platform ios --latest
-   ```
-
-   > You can also combine build and submit in a single command, using `eas build ... --auto-submit`.
-
-5. Before you can get your app in the hands of your users, you'll have to provide additional information to the app stores. This includes screenshots, app information, privacy policies, etc. _While still in preview_, [EAS Metadata](https://docs.expo.dev/eas/metadata/) can help you with most of this information.
-
-6. Once everything is approved, your users can finally enjoy your app. Let's say you spotted a small typo; you'll have to create a new build, submit it to the stores, and wait for approval before you can resolve this issue. In these cases, you can use EAS Update to quickly send a small bugfix to your users without going through this long process. Let's start by setting up EAS Update.
-
-   The steps below summarize the [Getting started with EAS Update](https://docs.expo.dev/eas-update/getting-started/#configure-your-project) guide.
-
-   ```bash
-   // Add the `expo-updates` library to your Expo app
-   $ cd apps/expo
-   $ pnpm expo install expo-updates
-
-   // Configure EAS Update
-   $ eas update:configure
-   ```
-
-7. Before we can send out updates to your app, you have to create a new build and submit it to the app stores. For every change that includes native APIs, you have to rebuild the app and submit the update to the app stores. See steps 2 and 3.
-
-8. Now that everything is ready for updates, let's create a new update for `production` builds. With the `--auto` flag, EAS Update uses your current git branch name and commit message for this update. See [How EAS Update works](https://docs.expo.dev/eas-update/how-eas-update-works/#publishing-an-update) for more information.
-
-   ```bash
-   $ cd apps/expo
-   $ eas update --auto
-   ```
-
-   > Your OTA (Over The Air) updates must always follow the app store's rules. You can't change your app's primary functionality without getting app store approval. But this is a fast way to update your app for minor changes and bug fixes.
-
-9. Done! Now that you have created your production build, submitted it to the stores, and installed EAS Update, you are ready for anything!
-
-## References
-
-The stack originates from [create-t3-app](https://github.com/t3-oss/create-t3-app).
-
-A [blog post](https://jumr.dev/blog/t3-turbo) where I wrote how to migrate a T3 app into this.
+## License
+Distributed under the Sustainable Use License. See `LICENSE.md` for more information.

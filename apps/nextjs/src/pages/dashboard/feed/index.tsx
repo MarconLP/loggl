@@ -54,7 +54,7 @@ const Feed: NextPage = () => {
               <ChevronDoubleRightIcon className="h-5 w-5" />
             </div>
             <span className="ml-4 font-bold">Feed</span>
-            <div className="ml-auto mr-4 flex max-h-[35px] flex-col items-center justify-center rounded px-2 py-2 text-sm text-[#6c6685]">
+            <div className="ml-auto mr-4 flex hidden max-h-[35px] flex-col items-center justify-center rounded px-2 py-2 text-sm text-[#6c6685]">
               <span>{1 + 1}/5.000 events</span>
               <div className="mt-1 h-[3px] w-full rounded-full bg-gray-200">
                 <div

@@ -3,6 +3,7 @@ import { type DefaultSession, type NextAuthOptions } from "next-auth";
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 
+import { posthog } from "@acme/api/posthog";
 import { prisma } from "@acme/db";
 
 /**
@@ -20,10 +21,13 @@ declare module "next-auth" {
     } & DefaultSession["user"];
   }
 
-  // interface User {
-  //   // ...other properties
-  //   // role: UserRole;
-  // }
+  interface Profile {
+    sub?: string;
+    name?: string;
+    email?: string;
+    image?: string;
+    email_verified?: string;
+  }
 }
 
 /**
@@ -39,6 +43,45 @@ export const authOptions: NextAuthOptions = {
         // session.user.role = user.role; <-- put other properties on the session here
       }
       return session;
+    },
+    signIn({ account, profile }) {
+      if (account?.provider === "google") {
+        return !!profile?.email_verified;
+      }
+      return true; // Do different verification for other providers that don't have `email_verified`
+    },
+  },
+  events: {
+    signIn: ({ user, account, isNewUser }) => {
+      posthog?.capture({
+        distinctId: user.id,
+        event: "signed in",
+        properties: {
+          name: user.name,
+          email: user.email,
+          provider: account?.provider,
+          isNewUser,
+        },
+      });
+      void posthog?.shutdownAsync();
+    },
+    signOut: ({ session }) => {
+      // posthog?.capture({
+      //   distinctId: session.id,
+      //   event: "logged out",
+      // });
+      console.log("add logout event");
+    },
+    createUser: ({ user }) => {
+      posthog?.capture({
+        distinctId: user.id,
+        event: "create user",
+        properties: {
+          name: user.name,
+          email: user.email,
+        },
+      });
+      void posthog?.shutdownAsync();
     },
   },
   adapter: PrismaAdapter(prisma),
@@ -63,7 +106,7 @@ export const authOptions: NextAuthOptions = {
   ],
   pages: {
     signIn: "/sign-in",
-    signOut: "/auth/signout",
-    error: "/auth/error", // Error code passed in query string as ?error=
+    // signOut: "/auth/signout",
+    // error: "/auth/error", // Error code passed in query string as ?error=
   },
 };

@@ -23,6 +23,8 @@
 
 Loggl is an self-hostable product analytics product. Automate the collection of every event on your website or app, with no need to send data to 3rd parties. 
 
+![product cover](https://github.com/marconlp/loggl/blob/main/cover.png)
+
 ## Development
 
 ### Setup

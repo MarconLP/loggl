@@ -19,8 +19,8 @@ export default async function handler(
   const [, token] = req.headers["authorization"]?.split(" ") ?? [];
 
   if (!token) {
-    return res.status(403).json({
-      error: { message: "Forbidden" },
+    return res.status(401).json({
+      error: { message: "Unauthorized" },
     });
   }
 
@@ -39,12 +39,15 @@ export default async function handler(
         },
       },
     });
-    if (!tokenDoc[0]?.userId) throw Error("Forbidden");
+    if (!tokenDoc[0]?.userId)
+      return res.status(403).json({
+        error: { message: "Forbidden" },
+      });
     pushTokens = tokenDoc[0].user.pushTokens.map((x) => x.token);
     userId = tokenDoc[0].userId;
   } catch (err) {
-    return res.status(401).json({
-      error: { message: "Something went wrong" },
+    return res.status(403).json({
+      error: { message: err ?? "Something went wrong" },
     });
   }
 
@@ -104,7 +107,7 @@ export default async function handler(
       error: "Something went wrong",
     });
 
-  const _notification = await prisma.notification.create({
+  const notification = await prisma.notification.create({
     data: {
       event,
       description,
@@ -136,6 +139,5 @@ export default async function handler(
     }
   }
 
-  console.log("event successfully created");
-  res.send("event successfully created");
+  res.send(notification);
 }

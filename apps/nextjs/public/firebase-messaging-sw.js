@@ -9,7 +9,7 @@ firebase.initializeApp({
   projectId: "loggl-bcf98",
   storageBucket: "loggl-bcf98.appspot.com",
   messagingSenderId: "284272360548",
-  appId: "1:284272360548:web:99757eff998f46f6743371",
+  appId: "1:284272360548:web:8be9ea8df0f63cad743371",
 });
 
 const messaging = firebase.messaging();

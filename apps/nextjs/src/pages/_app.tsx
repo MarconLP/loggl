@@ -1,15 +1,17 @@
 import "../styles/globals.css";
-import { useEffect } from "react";
+import { ReactNode, useEffect } from "react";
 import type { AppType } from "next/app";
 import Head from "next/head";
 import firebase from "firebase/app";
 import type { Session } from "next-auth";
-import { SessionProvider } from "next-auth/react";
+import { SessionProvider, useSession } from "next-auth/react";
 
 import { api } from "~/utils/api";
 import { firebaseCloudMessaging } from "~/utils/firebase";
 import "vercel-toast/css";
+import { useRouter } from "next/router";
 import posthog from "posthog-js";
+import { PostHogProvider, usePostHog } from "posthog-js/react";
 import { createToast } from "vercel-toast";
 
 import CrispChat from "~/components/CrispChat";
@@ -132,11 +134,50 @@ const MyApp: AppType<{ session: Session | null }> = ({
         {/*<link rel='apple-touch-startup-image' href='/images/apple_splash_640.png' sizes='640x1136' />*/}
       </Head>
       <SessionProvider session={session}>
-        <Component {...pageProps} />
-        <CrispChat />
+        <PostHogProvider client={posthog}>
+          <PostHogIdentificationWrapper>
+            <Component {...pageProps} />
+            <CrispChat />
+          </PostHogIdentificationWrapper>
+        </PostHogProvider>
       </SessionProvider>
     </>
   );
+};
+
+const PostHogIdentificationWrapper = ({
+  children,
+}: {
+  children: ReactNode;
+}) => {
+  const { data: session, status } = useSession();
+  const posthog = usePostHog();
+  const router = useRouter();
+
+  useEffect(() => {
+    // Track page views
+    const handleRouteChange = () => posthog?.capture("$pageview");
+    router.events.on("routeChangeComplete", handleRouteChange);
+
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!posthog?.__loaded) return;
+    if (status === "authenticated") {
+      const { id, name, email } = session?.user;
+      posthog?.identify(id, {
+        name,
+        email,
+      });
+    } else if (status === "unauthenticated") {
+      posthog?.reset();
+    }
+  }, [posthog, session, status]);
+
+  return <div>{children}</div>;
 };
 
 export default api.withTRPC(MyApp);

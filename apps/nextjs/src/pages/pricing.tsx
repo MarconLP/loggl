@@ -3,6 +3,7 @@ import Head from "next/head";
 import { Disclosure, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronUpIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import { signIn } from "next-auth/react";
+import { usePostHog } from "posthog-js/react";
 
 import CTA from "~/components/landing/CTA";
 import Footer from "~/components/landing/Footer";
@@ -10,9 +11,12 @@ import Header from "~/components/landing/Header";
 
 export default function Pricing() {
   const [billedAnnually, setBilledAnnually] = useState<boolean>(true);
+  const posthog = usePostHog();
 
   const toggleBillingCycle = () => {
     setBilledAnnually(!billedAnnually);
+
+    posthog?.capture("change billing cycle");
   };
 
   return (
@@ -116,7 +120,12 @@ export default function Pricing() {
               </div>
               <div className="mt-2 flex-grow" />
               <button
-                onClick={() => void signIn()}
+                onClick={() => {
+                  posthog?.capture("clicked get started", {
+                    pricingPage: true,
+                  });
+                  void signIn();
+                }}
                 type="submit"
                 className="btn mt-4 block w-full appearance-none rounded-lg bg-black px-4 py-2.5 text-center text-sm font-medium text-white shadow-lg shadow-black/50 duration-100 focus:outline-transparent disabled:opacity-80"
               >
@@ -166,7 +175,7 @@ export default function Pricing() {
             <Disclosure
               key={question}
               as="div"
-              className="max-w-[600px] max-w-[80vw] sm:w-[600px]"
+              className="max-w-[80vw] sm:w-[600px]"
             >
               {({ open }) => (
                 <>

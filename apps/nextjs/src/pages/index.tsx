@@ -10,6 +10,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import HTTPSnippet from "httpsnippet";
 import { signIn, useSession } from "next-auth/react";
+import { usePostHog } from "posthog-js/react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 
 import CTA from "~/components/landing/CTA";
@@ -23,6 +24,7 @@ dayjs.extend(relativeTime);
 const Home: NextPage = () => {
   const session = useSession();
   const router = useRouter();
+  const posthog = usePostHog();
   const [copied, setCopied] = useState<boolean>(false);
 
   useEffect(() => {
@@ -111,12 +113,16 @@ const Home: NextPage = () => {
               </p>
               <div className="mt-10 flex items-center justify-center gap-x-6">
                 <button
-                  onClick={() => void signIn()}
+                  onClick={() => {
+                    posthog?.capture("clicked get started");
+                    void signIn();
+                  }}
                   className="rounded-md bg-gray-900 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-950 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                 >
                   Get started for free
                 </button>
                 <a
+                  onClick={() => posthog?.capture("clicked schedule demo")}
                   target="_blank"
                   href="https://cal.com/marcon/loggl-demo"
                   className="text-sm font-semibold leading-6"
@@ -265,6 +271,7 @@ const Home: NextPage = () => {
                   <div>
                     {categories.map(({ tab }) => (
                       <Tab
+                        onClick={() => posthog?.capture("clicked code " + tab)}
                         key={tab}
                         className={({ selected }) =>
                           `px-1 py-2.5 outline-none ${

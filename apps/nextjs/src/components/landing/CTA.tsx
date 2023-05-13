@@ -1,6 +1,9 @@
 import { signIn } from "next-auth/react";
+import { usePostHog } from "posthog-js/react";
 
 export default function CTA() {
+  const posthog = usePostHog();
+
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-7xl py-12 sm:px-6 sm:py-16 lg:px-8">
@@ -10,12 +13,18 @@ export default function CTA() {
           </h2>
           <div className="mt-10 flex items-center justify-center gap-x-6">
             <button
-              onClick={() => void signIn()}
+              onClick={() => {
+                posthog?.capture("clicked get started", { cta: true });
+                void signIn();
+              }}
               className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
               Get started for free
             </button>
             <a
+              onClick={() =>
+                posthog?.capture("clicked schedule demo", { cta: true })
+              }
               target="_blank"
               href="https://cal.com/marcon/loggl-demo"
               className="text-sm font-semibold leading-6 text-white"

@@ -1,6 +1,7 @@
 import { Fragment, useState, type SyntheticEvent } from "react";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import { InboxIcon, PlusIcon } from "@heroicons/react/24/solid";
+import { usePostHog } from "posthog-js/react";
 
 import { api } from "~/utils/api";
 
@@ -8,6 +9,7 @@ export default function NewApiKeyMenu() {
   const [open, setOpen] = useState<boolean>(false);
   const [name, setName] = useState<string>("");
   const utils = api.useContext();
+  const posthog = usePostHog();
   const createApiKeyMutation = api.account.createApiKey.useMutation({
     onSuccess: async () => {
       await utils.account.getApiKeys.invalidate();
@@ -25,11 +27,16 @@ export default function NewApiKeyMenu() {
     setOpen(false);
   };
 
+  const handleOpen = () => {
+    setOpen(true);
+    posthog?.capture("open api-key create modal");
+  };
+
   return (
     <>
       <div
         className="flex h-full flex-col items-center justify-center"
-        onClick={() => setOpen(true)}
+        onClick={handleOpen}
       >
         <button className="hover:bg-muted hover:border-emphasis focus-visible:bg-subtle focus-visible:ring-empthasis relative inline-flex h-9 items-center rounded-md border px-4 py-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2">
           <PlusIcon className="mr-1 h-4 w-4 stroke-[1.5px]" />

@@ -1,6 +1,7 @@
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { LinkIcon } from "@heroicons/react/24/solid";
 import { CopyIcon } from "@radix-ui/react-icons";
+import { usePostHog } from "posthog-js/react";
 import { createToast } from "vercel-toast";
 
 import { api } from "~/utils/api";
@@ -9,6 +10,7 @@ import SettingsLayout from "~/components/settings/SettingsLayout";
 
 export default function ApiKeysSettingsPage() {
   const { data: apiKeys } = api.account.getApiKeys.useQuery();
+  const posthog = usePostHog();
   const utils = api.useContext();
   const deleteApiMutation = api.account.deleteApiKey.useMutation({
     onSuccess: async () => {
@@ -21,6 +23,8 @@ export default function ApiKeysSettingsPage() {
     createToast("Copied API Token", {
       timeout: 3000,
     });
+
+    posthog?.capture("copied api key");
   };
 
   const handleDelete = (id: string) => {

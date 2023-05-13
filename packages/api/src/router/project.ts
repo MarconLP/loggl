@@ -1,17 +1,26 @@
 import { z } from "zod";
 
+import { posthog } from "../../posthog";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const projectRouter = createTRPCRouter({
-  get: protectedProcedure.query(async ({ ctx }) => {
-    return await ctx.prisma.project.findMany({
+  get: protectedProcedure.query(async ({ ctx: { session, prisma } }) => {
+    const projects = await prisma.project.findMany({
       where: {
-        userId: ctx.session.user.id,
+        userId: session.user.id,
       },
       include: {
         channels: true,
       },
     });
+
+    posthog?.capture({
+      distinctId: session.user.id,
+      event: "get sidebar projects",
+    });
+    void posthog?.shutdownAsync();
+
+    return projects;
   }),
   create: protectedProcedure
     .input(z.object({ name: z.string() }))
@@ -22,6 +31,13 @@ export const projectRouter = createTRPCRouter({
           userId: session.user.id,
         },
       });
+
+      posthog?.capture({
+        distinctId: session.user.id,
+        event: "create project",
+      });
+      void posthog?.shutdownAsync();
+
       return {
         project,
       };
@@ -35,6 +51,12 @@ export const projectRouter = createTRPCRouter({
           id: input.id,
         },
       });
+
+      posthog?.capture({
+        distinctId: session.user.id,
+        event: "delete project",
+      });
+      void posthog?.shutdownAsync();
 
       return project;
     }),

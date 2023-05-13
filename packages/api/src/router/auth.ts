@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { posthog } from "../../posthog";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
 export const authRouter = createTRPCRouter({
@@ -26,6 +27,13 @@ export const authRouter = createTRPCRouter({
           userId: session.user.id,
         },
       });
+
+      posthog?.capture({
+        distinctId: session.user.id,
+        event: "push token registered",
+      });
+      void posthog?.shutdownAsync();
+
       return "OK";
     }),
 });

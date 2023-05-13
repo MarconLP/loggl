@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { posthog } from "../../posthog";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const feedRouter = createTRPCRouter({
@@ -10,12 +11,12 @@ export const feedRouter = createTRPCRouter({
         cursor: z.string().nullish(),
       }),
     )
-    .query(async ({ ctx, input }) => {
-      const notifications = await ctx.prisma.notification.findMany({
+    .query(async ({ ctx: { session, prisma }, input }) => {
+      const notifications = await prisma.notification.findMany({
         take: input.limit + 1,
         cursor: input.cursor ? { id: input.cursor } : undefined,
         where: {
-          userId: ctx.session.user.id,
+          userId: session.user.id,
         },
         orderBy: {
           timestamp: "desc",
@@ -27,6 +28,16 @@ export const feedRouter = createTRPCRouter({
         const nextItem = notifications.pop();
         nextCursor = nextItem?.id;
       }
+
+      posthog?.capture({
+        distinctId: session.user.id,
+        event: "get all feed",
+        properties: {
+          limit: input.limit,
+          cursor: input.cursor,
+        },
+      });
+      void posthog?.shutdownAsync();
 
       return {
         notifications,
@@ -41,8 +52,8 @@ export const feedRouter = createTRPCRouter({
         projectId: z.string(),
       }),
     )
-    .query(async ({ ctx, input }) => {
-      const notifications = await ctx.prisma.notification.findMany({
+    .query(async ({ ctx: { session, prisma }, input }) => {
+      const notifications = await prisma.notification.findMany({
         take: input.limit + 1,
         cursor: input.cursor ? { id: input.cursor } : undefined,
         where: {
@@ -59,6 +70,17 @@ export const feedRouter = createTRPCRouter({
         nextCursor = nextItem?.id;
       }
 
+      posthog?.capture({
+        distinctId: session.user.id,
+        event: "get project feed",
+        properties: {
+          limit: input.limit,
+          cursor: input.cursor,
+          projectId: input.projectId,
+        },
+      });
+      void posthog?.shutdownAsync();
+
       return {
         notifications,
         nextCursor,
@@ -72,8 +94,8 @@ export const feedRouter = createTRPCRouter({
         channelId: z.string(),
       }),
     )
-    .query(async ({ ctx, input }) => {
-      const notifications = await ctx.prisma.notification.findMany({
+    .query(async ({ ctx: { session, prisma }, input }) => {
+      const notifications = await prisma.notification.findMany({
         take: input.limit + 1,
         cursor: input.cursor ? { id: input.cursor } : undefined,
         where: {
@@ -90,6 +112,16 @@ export const feedRouter = createTRPCRouter({
         nextCursor = nextItem?.id;
       }
 
+      posthog?.capture({
+        distinctId: session.user.id,
+        event: "get channel feed",
+        properties: {
+          limit: input.limit,
+          cursor: input.cursor,
+        },
+      });
+      void posthog?.shutdownAsync();
+
       return {
         notifications,
         nextCursor,
@@ -104,6 +136,15 @@ export const feedRouter = createTRPCRouter({
           id: input.id,
         },
       });
+
+      posthog?.capture({
+        distinctId: session.user.id,
+        event: "delete notification",
+        properties: {
+          notificationId: input.id,
+        },
+      });
+      void posthog?.shutdownAsync();
 
       return project;
     }),

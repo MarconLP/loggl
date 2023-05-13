@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { posthog } from "../../posthog";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const accountRouter = createTRPCRouter({
@@ -9,6 +10,16 @@ export const accountRouter = createTRPCRouter({
         userId: session.user.id,
       },
     });
+
+    posthog?.capture({
+      distinctId: session.user.id,
+      event: "get all api keys",
+      properties: {
+        apiKeysAmount: apiKeys.length,
+      },
+    });
+    void posthog?.shutdownAsync();
+
     return apiKeys;
   }),
   createApiKey: protectedProcedure
@@ -25,6 +36,16 @@ export const accountRouter = createTRPCRouter({
           token,
         },
       });
+
+      posthog?.capture({
+        distinctId: session.user.id,
+        event: "create api keys",
+        properties: {
+          name: input.name,
+        },
+      });
+      void posthog?.shutdownAsync();
+
       return "OK";
     }),
   deleteApiKey: protectedProcedure
@@ -36,6 +57,13 @@ export const accountRouter = createTRPCRouter({
           id: input.id,
         },
       });
+
+      posthog?.capture({
+        distinctId: session.user.id,
+        event: "delete api keys",
+      });
+      void posthog?.shutdownAsync();
+
       return "OK";
     }),
 });

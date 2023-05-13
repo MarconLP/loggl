@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { z } from "zod";
 
+import { posthog } from "@acme/api/posthog";
 import { prisma } from "@acme/db";
 
 import admin from "~/utils/firebaseAdmin";
@@ -138,6 +139,20 @@ export default async function handler(
       console.log("Error sending message:", error);
     }
   }
+
+  posthog?.capture({
+    distinctId: userId,
+    event: "trigger event",
+    properties: {
+      notify,
+      event,
+      description,
+      icon,
+      projectId: projectDoc[0].id,
+      channelId: channelDoc[0].id,
+    },
+  });
+  void posthog?.shutdownAsync();
 
   res.send(notification);
 }

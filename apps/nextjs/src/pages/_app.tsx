@@ -22,6 +22,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
+  const utils = api.useContext();
   const registerPushTokenMutation = api.auth.registerPushToken.useMutation();
 
   useEffect(() => {
@@ -54,10 +55,13 @@ const MyApp: AppType<{ session: Session | null }> = ({
   // Get the push notification message and triggers a toast to show it
   function getMessage() {
     const messaging = firebase.messaging();
-    messaging.onMessage((message) => {
+    messaging.onMessage((message: { notification: { title: string } }) => {
       createToast(message?.notification?.title ?? "A new event", {
         timeout: 3000,
       });
+      void utils.feed.getByChannel.invalidate();
+      void utils.feed.getByProject.invalidate();
+      void utils.feed.getAll.invalidate();
     });
   }
 

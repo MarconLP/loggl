@@ -22,7 +22,7 @@ export default function CookieBanner() {
 
   if (!show) return <></>;
   return (
-    <div className="cookie-banner fixed bottom-0 z-50 flex h-[130px] w-full flex-col items-center justify-between bg-[#414042] p-4 px-32 text-sm text-white md:h-[80px] md:flex-row">
+    <div className="cookie-banner fixed bottom-0 z-50 flex h-[130px] w-full flex-col items-center justify-between bg-[#414042] p-4 px-8 text-sm text-white md:h-[80px] md:flex-row md:px-32">
       <p>
         We use tracking cookies to understand how you use the product and help
         us improve it.

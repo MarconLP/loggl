@@ -14,7 +14,7 @@ export default function BillingSettingsPage() {
         </span>
       </div>
       <div className="mt-8">
-        <div className="flex flex-row items-center justify-between">
+        <div className="flex flex-col items-start justify-between md:flex-row">
           <div className="flex flex-col text-[#374151]">
             <span className="font-medium">
               View and manage your billing details
@@ -31,7 +31,7 @@ export default function BillingSettingsPage() {
                   timeout: 3000,
                 })
               }
-              className="rounded-md bg-[#292929] px-4 py-2 text-white"
+              className="mt-4 rounded-md bg-[#292929] px-4 py-2 text-white md:mt-0"
             >
               Billing portal
             </button>

@@ -25,7 +25,7 @@ export default function FeedList({ notifications, fetchNextPage }: Props) {
 
   return (
     <div className="flex grow flex-col items-center justify-start">
-      {notifications.length > 0 ? (
+      {notifications.length > 0 && session?.user.completed_onboarding ? (
         <div className="h-full w-full overflow-y-auto">
           <Virtuoso
             data={notifications}

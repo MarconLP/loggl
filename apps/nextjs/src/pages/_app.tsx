@@ -15,6 +15,7 @@ import { PostHogProvider, usePostHog } from "posthog-js/react";
 import { createToast } from "vercel-toast";
 
 import CrispChat from "~/components/CrispChat";
+import CookieBanner from "~/components/landing/CookieBanner";
 import { env } from "~/env.mjs";
 
 const MyApp: AppType<{ session: Session | null }> = ({
@@ -138,6 +139,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
           <PostHogIdentificationWrapper>
             <Component {...pageProps} />
             <CrispChat />
+            <CookieBanner />
           </PostHogIdentificationWrapper>
         </PostHogProvider>
       </SessionProvider>

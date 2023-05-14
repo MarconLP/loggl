@@ -2,6 +2,7 @@ import Link from "next/link";
 import { SignalSlashIcon } from "@heroicons/react/24/solid";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { useSession } from "next-auth/react";
 import { Virtuoso } from "react-virtuoso";
 
 import { type RouterOutputs } from "@acme/api";
@@ -9,6 +10,7 @@ import { type RouterOutputs } from "@acme/api";
 import { api } from "~/utils/api";
 import NewProjectDialog from "~/components/NewProjectDialog";
 import NotificationMoreMenu from "~/components/NotificationMoreMenu";
+import Onboarding from "~/components/Onboarding";
 
 dayjs.extend(relativeTime);
 
@@ -18,6 +20,7 @@ interface Props {
 }
 
 export default function FeedList({ notifications, fetchNextPage }: Props) {
+  const { data: session } = useSession();
   const { data: projects } = api.project.get.useQuery();
 
   return (
@@ -59,10 +62,10 @@ export default function FeedList({ notifications, fetchNextPage }: Props) {
         </div>
       ) : null}
 
-      {projects && projects?.length <= 0 ? (
-        <NewProjectDialog emptyState={true} />
-      ) : (
-        notifications.length === 0 && (
+      {session?.user.completed_onboarding ? (
+        projects && projects?.length <= 0 ? (
+          <NewProjectDialog emptyState={true} />
+        ) : notifications.length === 0 ? (
           <div className="flex h-full flex-col items-center justify-center">
             <SignalSlashIcon className="h-16 w-16" />
             <span className="text-palette-900 mb-6 mt-2 text-base font-medium leading-6 md:text-base">
@@ -74,7 +77,9 @@ export default function FeedList({ notifications, fetchNextPage }: Props) {
               </button>
             </Link>
           </div>
-        )
+        ) : null
+      ) : (
+        <Onboarding />
       )}
     </div>
   );

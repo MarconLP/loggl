@@ -66,4 +66,24 @@ export const accountRouter = createTRPCRouter({
 
       return "OK";
     }),
+  completeOnboarding: protectedProcedure.mutation(
+    async ({ ctx: { session, prisma } }) => {
+      await prisma.user.updateMany({
+        where: {
+          id: session.user.id,
+        },
+        data: {
+          completed_onboarding: true,
+        },
+      });
+
+      posthog?.capture({
+        distinctId: session.user.id,
+        event: "completed onboarding",
+      });
+      void posthog?.shutdownAsync();
+
+      return "OK";
+    },
+  ),
 });

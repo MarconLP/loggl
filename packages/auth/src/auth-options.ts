@@ -16,6 +16,7 @@ declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
       id: string;
+      completed_onboarding: boolean;
       // ...other properties
       // role: UserRole;
     } & DefaultSession["user"];
@@ -40,6 +41,7 @@ export const authOptions: NextAuthOptions = {
     session({ session, user }) {
       if (session.user) {
         session.user.id = user.id;
+        session.user.completed_onboarding = user.completed_onboarding;
         // session.user.role = user.role; <-- put other properties on the session here
       }
       return session;

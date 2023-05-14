@@ -98,7 +98,7 @@ Loggl is an self-hostable product analytics product. Automate the collection of 
 
 ### Vercel
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FMarconLP%2Floggl&env=DATABASE_URL,NEXTAUTH_URL,NEXTAUTH_SECRET,GITHUB_ID,GITHUB_SECRET,AWS_ENDPOINT,AWS_REGION,AWS_KEY_ID,AWS_SECRET_ACCESS_KEY,AWS_BUCKET_NAME&project-name=loggl&repository-name=snapify)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FMarconLP%2Floggl&env=DATABASE_URL,NEXTAUTH_SECRET,GITHUB_CLIENT_ID,GITHUB_CLIENT_SECRET)
 
 [//]: # (## Contributing)
 [//]: # (Please see our contributing guide at `CONTRIBUTING.md`)

@@ -24,7 +24,7 @@ export default function FeedList({ notifications, fetchNextPage }: Props) {
   const { data: projects } = api.project.get.useQuery();
 
   return (
-    <div className="flex grow flex-col items-center justify-start">
+    <div className="flex grow flex-col items-center justify-start overflow-y-auto">
       {notifications.length > 0 && session?.user.completed_onboarding ? (
         <div className="h-full w-full overflow-y-auto">
           <Virtuoso

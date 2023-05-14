@@ -53,7 +53,7 @@ const Feed: NextPage = () => {
             sidebarOpen ? "ml-[220px]" : ""
           }`}
         >
-          <div className="flex h-[62px] items-center border-b border-[#E7E9EB]">
+          <div className="flex h-[62px] shrink-0 items-center border-b border-[#E7E9EB]">
             <div
               className={`ml-4 cursor-pointer p-1 ${
                 sidebarOpen ? "hidden" : ""

@@ -17,6 +17,7 @@ jobs:
   build-lint:
     env:
       DATABASE_URL: file:./db.sqlite
+      NEXT_PUBLIC_POSTHOG_PROXY_SECRET: as2323mk
     runs-on: ubuntu-latest
 
     steps:

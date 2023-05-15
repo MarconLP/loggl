@@ -93,7 +93,7 @@ const Home: NextPage = () => {
         <Header />
 
         <div className="relative isolate flex flex-col items-center justify-center px-6 pt-14 lg:flex-row lg:px-8">
-          <div className=" flex flex-col items-center justify-center xl:flex-row">
+          <div className=" flex max-w-full flex-col items-center justify-center xl:flex-row">
             <div className="mx-auto max-w-7xl py-32 sm:py-48 lg:py-56">
               {/*<div className="hidden sm:mb-8 sm:flex sm:justify-center">*/}
               {/*  <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">*/}

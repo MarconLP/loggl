@@ -35,7 +35,7 @@ const Feed: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Create T3 App</title>
+        <title>Loggl</title>
       </Head>
       <main className="flex h-screen flex-row overflow-auto text-[#3c4149]">
         <Sidebar />

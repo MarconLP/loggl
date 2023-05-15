@@ -12,12 +12,12 @@ on:
 env:
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+  NEXT_PUBLIC_POSTHOG_PROXY_SECRET: "as2323mk"
 
 jobs:
   build-lint:
     env:
       DATABASE_URL: file:./db.sqlite
-      NEXT_PUBLIC_POSTHOG_PROXY_SECRET: as2323mk
     runs-on: ubuntu-latest
 
     steps:

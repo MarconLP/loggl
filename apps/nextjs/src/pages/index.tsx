@@ -93,97 +93,99 @@ const Home: NextPage = () => {
         <Header />
 
         <div className="relative isolate flex flex-col items-center justify-center px-6 pt-14 lg:flex-row lg:px-8">
-          <div className="mx-auto max-w-7xl py-32 sm:py-48 lg:py-56">
-            {/*<div className="hidden sm:mb-8 sm:flex sm:justify-center">*/}
-            {/*  <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">*/}
-            {/*    Announcing our next round of funding.{" "}*/}
-            {/*    <Link href="/blog" className="font-semibold text-indigo-600">*/}
-            {/*      <span className="absolute inset-0" aria-hidden="true" />*/}
-            {/*      Read more <span aria-hidden="true">&rarr;</span>*/}
-            {/*    </Link>*/}
-            {/*  </div>*/}
-            {/*</div>*/}
-            <div className="text-center">
-              <h1 className="max-w-[650px] text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-                Realtime event monitoring
-              </h1>
-              <p className="mt-6 text-lg leading-8 text-gray-600">
-                Get user insights in realtime, to make informed business
-                decisions.
-              </p>
-              <div className="mt-10 flex items-center justify-center gap-x-6">
-                <button
-                  onClick={() => {
-                    posthog?.capture("clicked get started");
-                    void signIn();
-                  }}
-                  className="rounded-md bg-gray-900 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-950 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-                >
-                  Get started for free
-                </button>
-                <a
-                  onClick={() => posthog?.capture("clicked schedule demo")}
-                  target="_blank"
-                  href="https://cal.com/marcon/loggl-demo"
-                  className="text-sm font-semibold leading-6"
-                >
-                  Schedule Demo <span aria-hidden="true">→</span>
-                </a>
+          <div className=" flex flex-col items-center justify-center xl:flex-row">
+            <div className="mx-auto max-w-7xl py-32 sm:py-48 lg:py-56">
+              {/*<div className="hidden sm:mb-8 sm:flex sm:justify-center">*/}
+              {/*  <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">*/}
+              {/*    Announcing our next round of funding.{" "}*/}
+              {/*    <Link href="/blog" className="font-semibold text-indigo-600">*/}
+              {/*      <span className="absolute inset-0" aria-hidden="true" />*/}
+              {/*      Read more <span aria-hidden="true">&rarr;</span>*/}
+              {/*    </Link>*/}
+              {/*  </div>*/}
+              {/*</div>*/}
+              <div className="text-center">
+                <h1 className="max-w-[650px] text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+                  Realtime event monitoring
+                </h1>
+                <p className="mt-6 text-lg leading-8 text-gray-600">
+                  Get user insights in realtime, to make informed business
+                  decisions.
+                </p>
+                <div className="mt-10 flex items-center justify-center gap-x-6">
+                  <button
+                    onClick={() => {
+                      posthog?.capture("clicked get started");
+                      void signIn();
+                    }}
+                    className="rounded-md bg-gray-900 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-950 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                  >
+                    Get started for free
+                  </button>
+                  <a
+                    onClick={() => posthog?.capture("clicked schedule demo")}
+                    target="_blank"
+                    href="https://cal.com/marcon/loggl-demo"
+                    className="text-sm font-semibold leading-6"
+                  >
+                    Schedule Demo <span aria-hidden="true">→</span>
+                  </a>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className="h-[500px] w-[500px] max-w-[100%] overflow-hidden rounded-lg bg-[linear-gradient(135deg,_rgb(247,_240,_255),_rgb(167,_138,_254))]">
-            <div>
-              {[
-                {
-                  id: 1,
-                  icon: "👤",
-                  event: "User Registered",
-                  description: "email: user@example.com",
-                  timestamp: "today at 9:24 PM",
-                },
-                {
-                  id: 2,
-                  icon: "🤑",
-                  event: "Upgraded to Pro",
-                  description: "email: user@example.com",
-                  timestamp: "today at 9:28 PM",
-                },
-                {
-                  id: 3,
-                  icon: "🔥",
-                  event: "User Joined Waitlist",
-                  description: "email: user@example.com",
-                  timestamp: "today at 9:46 PM",
-                },
-                {
-                  id: 4,
-                  icon: "📬",
-                  event: "Feedback Submitted",
-                  description: "email: user@example.com",
-                  timestamp: "today at 10:35 PM",
-                },
-              ].map(({ id, icon, description, timestamp, event }) => (
-                <div key={id} className="px-2 pt-6">
-                  <div className="mx-auto flex w-full max-w-[400px] flex-row rounded-lg border border-[#00000014] bg-white p-6 text-[#474747]">
-                    <div className="mr-4 flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border border-[#00000014] bg-[#dad1bf1a]">
-                      {icon}
-                    </div>
-                    <div className="flex grow flex-col">
-                      <div>
-                        <span className="font-bold">{event}</span>
+            <div className="h-[500px] w-[500px] max-w-[100%] overflow-hidden rounded-lg bg-[linear-gradient(135deg,_rgb(247,_240,_255),_rgb(167,_138,_254))]">
+              <div>
+                {[
+                  {
+                    id: 1,
+                    icon: "👤",
+                    event: "User Registered",
+                    description: "email: user@example.com",
+                    timestamp: "today at 9:24 PM",
+                  },
+                  {
+                    id: 2,
+                    icon: "🤑",
+                    event: "Upgraded to Pro",
+                    description: "email: user@example.com",
+                    timestamp: "today at 9:28 PM",
+                  },
+                  {
+                    id: 3,
+                    icon: "🔥",
+                    event: "User Joined Waitlist",
+                    description: "email: user@example.com",
+                    timestamp: "today at 9:46 PM",
+                  },
+                  {
+                    id: 4,
+                    icon: "📬",
+                    event: "Feedback Submitted",
+                    description: "email: user@example.com",
+                    timestamp: "today at 10:35 PM",
+                  },
+                ].map(({ id, icon, description, timestamp, event }) => (
+                  <div key={id} className="px-2 pt-6">
+                    <div className="mx-auto flex w-full max-w-[400px] flex-row rounded-lg border border-[#00000014] bg-white p-6 text-[#474747]">
+                      <div className="mr-4 flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border border-[#00000014] bg-[#dad1bf1a]">
+                        {icon}
                       </div>
-                      <div className="flex flex-row">
-                        <span>{description}</span>
-                      </div>
-                      <div className="flex h-4 justify-end">
-                        <span className="block text-xs">{timestamp}</span>
+                      <div className="flex grow flex-col">
+                        <div>
+                          <span className="font-bold">{event}</span>
+                        </div>
+                        <div className="flex flex-row">
+                          <span>{description}</span>
+                        </div>
+                        <div className="flex h-4 justify-end">
+                          <span className="block text-xs">{timestamp}</span>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </div>

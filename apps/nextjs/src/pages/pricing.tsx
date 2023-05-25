@@ -74,7 +74,7 @@ export default function Pricing() {
                 included: true,
               },
               {
-                feature: "Live support",
+                feature: "Live-chat support",
                 included: true,
               },
             ],

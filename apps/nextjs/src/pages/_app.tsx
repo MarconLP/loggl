@@ -125,10 +125,16 @@ const MyApp: AppType<{ session: Session | null }> = ({
         />
         <meta property="og:site_name" content="Loggl" />
         <meta property="og:url" content="https://loggl.net" />
-        <meta
-          property="og:image"
-          content="https://loggl.net/icons/apple-touch-icon.png"
-        />
+
+        <meta name="twitter:image" content="/home.png" />
+        <meta name="twitter:image:type" content="image/png" />
+        <meta name="twitter:image:width" content="1200" />
+        <meta name="twitter:image:height" content="630" />
+
+        <meta property="og:image" content="/home.png" />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
 
         {/*<link rel='apple-touch-startup-image' href='/images/apple_splash_2048.png' sizes='2048x2732' />*/}
         {/*<link rel='apple-touch-startup-image' href='/images/apple_splash_1668.png' sizes='1668x2224' />*/}

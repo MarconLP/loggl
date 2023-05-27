@@ -29,6 +29,11 @@ declare module "next-auth" {
     image?: string;
     email_verified?: string;
   }
+
+  interface User {
+    completed_onboarding: boolean;
+    email_verified?: string;
+  }
 }
 
 /**

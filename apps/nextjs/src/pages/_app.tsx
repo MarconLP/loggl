@@ -1,5 +1,5 @@
 import "../styles/globals.css";
-import { ReactNode, useEffect } from "react";
+import { useEffect, type ReactNode } from "react";
 import type { AppType } from "next/app";
 import Head from "next/head";
 import firebase from "firebase/app";
@@ -66,7 +66,11 @@ const MyApp: AppType<{ session: Session | null }> = ({
   }
 
   // Check that PostHog is client-side (used to handle Next.js SSR)
-  if (typeof window !== "undefined" && !!env.NEXT_PUBLIC_POSTHOG_KEY) {
+  if (
+    typeof window !== "undefined" &&
+    !!env.NEXT_PUBLIC_POSTHOG_KEY &&
+    !!env.NEXT_PUBLIC_POSTHOG_PROXY_SECRET
+  ) {
     posthog.init(env.NEXT_PUBLIC_POSTHOG_KEY, {
       api_host: "/" + env.NEXT_PUBLIC_POSTHOG_PROXY_SECRET,
       // Enable debug mode in development

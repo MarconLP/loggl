@@ -1,4 +1,4 @@
-import admin, { type ServiceAccount } from "firebase-admin";
+import admin from "firebase-admin";
 
 import { env } from "~/env.mjs";
 

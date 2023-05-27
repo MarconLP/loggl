@@ -1,6 +1,6 @@
 import { Fragment, useState, type SyntheticEvent } from "react";
-import { Dialog, Menu, Transition } from "@headlessui/react";
-import { InboxIcon, PlusIcon } from "@heroicons/react/24/solid";
+import { Dialog, Transition } from "@headlessui/react";
+import { PlusIcon } from "@heroicons/react/24/solid";
 import { usePostHog } from "posthog-js/react";
 
 import { api } from "~/utils/api";

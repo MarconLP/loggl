@@ -31,7 +31,7 @@ export default function Header() {
     >
       <div className="m-auto flex w-[1048px] items-center justify-between px-[24px]">
         <Link href="/">
-          <div>logo</div>
+          <div>Loggl</div>
           {/*<Image*/}
           {/*  className="cursor-pointer p-2"*/}
           {/*  src={logo}*/}

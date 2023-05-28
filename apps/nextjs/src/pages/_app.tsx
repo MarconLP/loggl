@@ -111,7 +111,10 @@ const MyApp: AppType<{ session: Session | null }> = ({
 
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:url" content="https://loggl.net" />
-        <meta name="twitter:title" content="Loggl" />
+        <meta
+          name="twitter:title"
+          content="Loggl | Real-time event monitoring"
+        />
         <meta
           name="twitter:description"
           content="A tool to collect events and notify you when they happen!"
@@ -122,12 +125,18 @@ const MyApp: AppType<{ session: Session | null }> = ({
         />
         <meta name="twitter:creator" content="@Marcon565" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="Loggl" />
+        <meta
+          property="og:title"
+          content="Loggl | Real-time event monitoring"
+        />
         <meta
           property="og:description"
           content="A tool to collect events and notify you when they happen!"
         />
-        <meta property="og:site_name" content="Loggl" />
+        <meta
+          property="og:site_name"
+          content="Loggl | Real-time event monitoring"
+        />
         <meta property="og:url" content="https://loggl.net" />
 
         <meta name="twitter:image" content="https://loggl.net/home.png" />

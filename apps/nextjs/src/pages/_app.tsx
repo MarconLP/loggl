@@ -130,12 +130,12 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <meta property="og:site_name" content="Loggl" />
         <meta property="og:url" content="https://loggl.net" />
 
-        <meta name="twitter:image" content="/home.png" />
+        <meta name="twitter:image" content="https://loggl.net/home.png" />
         <meta name="twitter:image:type" content="image/png" />
         <meta name="twitter:image:width" content="1200" />
         <meta name="twitter:image:height" content="630" />
 
-        <meta property="og:image" content="/home.png" />
+        <meta property="og:image" content="https://loggl.net/home.png" />
         <meta property="og:image:type" content="image/png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />

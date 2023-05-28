@@ -89,7 +89,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <meta name="apple-mobile-web-app-title" content="Loggl" />
         <meta
           name="description"
-          content="Loggl makes it easy to collect and store the events that matter to you and notify you when they happen! For example, you can track user actions from your SaaS project, Customer actions from your e-commerce store, or player actions from your Minecraft server."
+          content="A tool to collect events and notify you when they happen!"
         />
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
@@ -114,7 +114,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <meta name="twitter:title" content="Loggl" />
         <meta
           name="twitter:description"
-          content="Loggl makes it easy to collect and store the events that matter to you and notify you when they happen! For example, you can track user actions from your SaaS project, Customer actions from your e-commerce store, or player actions from your Minecraft server."
+          content="A tool to collect events and notify you when they happen!"
         />
         <meta
           name="twitter:image"
@@ -125,7 +125,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <meta property="og:title" content="Loggl" />
         <meta
           property="og:description"
-          content="Loggl makes it easy to collect and store the events that matter to you and notify you when they happen! For example, you can track user actions from your SaaS project, Customer actions from your e-commerce store, or player actions from your Minecraft server."
+          content="A tool to collect events and notify you when they happen!"
         />
         <meta property="og:site_name" content="Loggl" />
         <meta property="og:url" content="https://loggl.net" />

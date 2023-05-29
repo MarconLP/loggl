@@ -356,7 +356,7 @@ const Home: NextPage = () => {
           <div className="flex max-w-7xl flex-1 flex-col items-center justify-center py-4 lg:h-[140px] lg:flex-row">
             {[
               { stat: "events tracked", value: "200+" },
-              { stat: "github stars", value: "52+" },
+              { stat: "github stars", value: "75+" },
             ].map(({ stat, value }) => (
               <div
                 key={stat}

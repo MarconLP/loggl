@@ -109,7 +109,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <link rel="mask-icon" href="/t3-icon.svg" color="#5bbad5" />
         <link rel="shortcut icon" href="/favicon.ico" />
 
-        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content="https://loggl.net" />
         <meta
           name="twitter:title"

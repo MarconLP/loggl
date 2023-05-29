@@ -11,7 +11,10 @@ export default function CTA() {
           <h2 className="mx-auto max-w-2xl text-4xl font-bold tracking-tight text-white">
             Give it a try
           </h2>
-          <div className="mt-10 flex items-center justify-center gap-x-6">
+          <p className="mt-4 text-lg leading-8 text-gray-300">
+            Ingest your events within 60 seconds.
+          </p>
+          <div className="mt-8 flex items-center justify-center gap-x-6">
             <button
               onClick={() => {
                 posthog?.capture("clicked get started", { cta: true });

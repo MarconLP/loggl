@@ -22,6 +22,7 @@ export const env = createEnv({
     ),
     // Add `.min(1) on ID and SECRET if you want to make sure they're not empty
     FIREBASE_PRIVATE_KEY: z.string(),
+    FIREBASE_CLIENT_EMAIL: z.string(),
   },
   /**
    * Specify your client-side environment variables schema here.
@@ -57,6 +58,7 @@ export const env = createEnv({
     NEXT_PUBLIC_FIREBASE_APP_ID: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
     NEXT_PUBLIC_VAPID_KEY: process.env.NEXT_PUBLIC_VAPID_KEY,
     FIREBASE_PRIVATE_KEY: process.env.FIREBASE_PRIVATE_KEY,
+    FIREBASE_CLIENT_EMAIL: process.env.FIREBASE_CLIENT_EMAIL,
     NEXT_PUBLIC_CRISP_WEBSITE_ID: process.env.NEXT_PUBLIC_CRISP_WEBSITE_ID,
     NEXT_PUBLIC_POSTHOG_KEY: process.env.NEXT_PUBLIC_POSTHOG_KEY,
     NEXT_PUBLIC_POSTHOG_HOST: process.env.NEXT_PUBLIC_POSTHOG_HOST,

@@ -5,10 +5,9 @@ import { env } from "~/env.mjs";
 if (!admin?.apps?.length) {
   admin.initializeApp({
     credential: admin.credential.cert({
-      projectId: "loggl-bcf98",
+      projectId: env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
       privateKey: env.FIREBASE_PRIVATE_KEY,
-      clientEmail:
-        "firebase-adminsdk-jc9tc@loggl-bcf98.iam.gserviceaccount.com",
+      clientEmail: env.FIREBASE_CLIENT_EMAIL,
     }),
   });
 }
